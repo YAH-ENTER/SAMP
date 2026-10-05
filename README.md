@@ -13,14 +13,38 @@ relative paths so it can be lifted straight onto its own domain.
 Each project is plain HTML, CSS and JS. No build step, no dependencies, no
 package manager. Open the folder, edit the files.
 
-To preview one with working relative paths (opening `index.html` as a `file://`
-URL breaks them), run the local server from the repo root:
+## Previewing a sample
+
+Double-clicking `index.html` does not work. The page loads but the CSS and JS
+do not, because `file://` URLs break the relative `css/` and `js/` paths. You
+need a local server, which is what `serve.ps1` is for.
+
+**One sample at a time.** Open PowerShell and run these two lines. The first
+line is the folder this README is in — the one holding `serve.ps1`, not the
+sample folder:
 
 ```powershell
+cd "C:\Users\yahsh\Yahshua Enterprises, LLC\WEB CODES 2026\SAMP"
 powershell -NoProfile -ExecutionPolicy Bypass -File .\serve.ps1 -Root .\joses-painting
 ```
 
-Then open http://localhost:8099/. Ctrl+C stops it.
+It prints the address. Open **http://localhost:8099/** in a browser and the
+sample is there. `Ctrl+C` in that PowerShell window stops it.
+
+To preview a different sample, stop it with `Ctrl+C` and run it again with that
+folder after `-Root`, for example `-Root .\some-other-sample`.
+
+If it says it cannot listen on the port, Windows is still holding it from a
+server that was closed without `Ctrl+C`. Use another one:
+
+```powershell
+powershell -NoProfile -ExecutionPolicy Bypass -File .\serve.ps1 -Port 8100 -Root .\joses-painting
+```
+
+Then the address is http://localhost:8100/ instead.
+
+Leaving `-Root` off serves this whole folder and shows a list of every sample
+to click through, if you ever want them all up at once.
 
 ## Zipping a sample to send
 
