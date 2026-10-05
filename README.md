@@ -6,6 +6,7 @@ relative paths so it can be lifted straight onto its own domain.
 | Project | What it is | Status |
 |---|---|---|
 | `joses-painting/` | Jose's Painting Services — Woodbridge, VA residential painter | Built, not launched |
+| `_zips/` | Generated delivery zips, one per sample | gitignored |
 
 ## Working in here
 
@@ -21,7 +22,34 @@ powershell -NoProfile -ExecutionPolicy Bypass -File .\serve.ps1 -Root .\joses-pa
 
 Then open http://localhost:8099/. Ctrl+C stops it.
 
+## Zipping a sample to send
+
+One folder per sample. Never merge a new sample's files into an existing
+sample's folder — that is what the zips exist to prevent.
+
+```powershell
+powershell -NoProfile -ExecutionPolicy Bypass -File .\archive.ps1 -Project joses-painting
+```
+
+Writes `_zips\joses-painting_<today>.zip`. Running it twice in a day gives you
+`-2`, `-3` and so on; nothing is ever overwritten. Everything inside the zip is
+prefixed with the project folder name, so unzipping never spills loose files
+into whatever directory the client happens to be in.
+
+`_zips\` is gitignored. Zips are build output, not source — regenerate one any
+time from the folder. They are also the client-facing format, since this repo
+is private and nobody outside can browse it.
+
+A zip contains the sample's working files, not git history, because the samples
+are subfolders of this one repo rather than repos of their own. History lives
+here and on GitHub.
+
 ## Branching
+
+Separate samples are folders on `main`, not branches — a repo has one working
+tree, so branch-per-sample means you can only ever see one sample on disk at a
+time. Use a branch when you want a variant of an existing sample, or when you
+are revising one that has already gone out.
 
 `main` holds the last known-good state of each project. Cut a branch per change:
 
