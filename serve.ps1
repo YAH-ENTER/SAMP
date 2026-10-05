@@ -14,16 +14,28 @@ param(
 if (-not $Root) { $Root = "." }
 $Root = (Resolve-Path -LiteralPath $Root).Path
 
-$listener = New-Object System.Net.HttpListener
-$listener.Prefixes.Add("http://localhost:$Port/")
-try {
-  $listener.Start()
-} catch {
-  # Windows can hold a port after a server is force-killed rather than Ctrl+C'd.
-  # Nothing to fix, just pick another one.
-  Write-Error ("Could not listen on port $Port. " + $_.Exception.Message + "`nTry another port:  .\serve.ps1 -Port 8100")
+# Windows holds a port for a while after a server is closed without Ctrl+C, and
+# another preview may already be up, so walk forward until one is free rather
+# than making you guess a number.
+$listener = $null
+foreach ($try in $Port..($Port + 20)) {
+  $candidate = New-Object System.Net.HttpListener
+  $candidate.Prefixes.Add("http://localhost:$try/")
+  try {
+    $candidate.Start()
+    $listener = $candidate
+    $Port = $try
+    break
+  } catch {
+    $candidate.Close()
+  }
+}
+
+if (-not $listener) {
+  Write-Error "Ports $Port to $($Port + 20) are all busy. Close any other preview windows and try again, or pass a different -Port."
   exit 1
 }
+
 Write-Output "serving $Root"
 Write-Output "open http://localhost:$Port/   (Ctrl+C to stop)"
 

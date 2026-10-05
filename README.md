@@ -28,20 +28,23 @@ cd "C:\Users\yahsh\Yahshua Enterprises, LLC\WEB CODES 2026\SAMP"
 powershell -NoProfile -ExecutionPolicy Bypass -File .\serve.ps1 -Root .\joses-painting
 ```
 
-It prints the address. Open **http://localhost:8099/** in a browser and the
-sample is there. `Ctrl+C` in that PowerShell window stops it.
+**Read the address it prints**, then open that in a browser:
+
+```
+serving C:\...\SAMP\joses-painting
+open http://localhost:8099/   (Ctrl+C to stop)
+```
+
+It usually says 8099, but not always. Windows hangs on to a port for a while
+after a server is closed by shutting the window instead of pressing `Ctrl+C`,
+so the script walks forward until it finds a free one and tells you which it
+got. If the line says 8102, use 8102. Nothing is wrong when that happens.
+
+`Ctrl+C` in that PowerShell window stops the server. Closing the window works
+too, but it is what ties up the port for the next run.
 
 To preview a different sample, stop it with `Ctrl+C` and run it again with that
 folder after `-Root`, for example `-Root .\some-other-sample`.
-
-If it says it cannot listen on the port, Windows is still holding it from a
-server that was closed without `Ctrl+C`. Use another one:
-
-```powershell
-powershell -NoProfile -ExecutionPolicy Bypass -File .\serve.ps1 -Port 8100 -Root .\joses-painting
-```
-
-Then the address is http://localhost:8100/ instead.
 
 Leaving `-Root` off serves this whole folder and shows a list of every sample
 to click through, if you ever want them all up at once.
