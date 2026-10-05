@@ -169,7 +169,7 @@ ul,ol{margin:0;padding:0;list-style:none}
   pointer-events:none;
 }
 .hero-sweep{
-  position:absolute;right:-22%;top:-30%;width:50%;height:170%;
+  position:absolute;right:-26%;top:-30%;width:46%;height:170%;
   background:linear-gradient(180deg,var(--red-500),var(--red-700));
   transform:rotate(14deg);opacity:.92;pointer-events:none;
 }
@@ -178,9 +178,12 @@ ul,ol{margin:0;padding:0;list-style:none}
   background:var(--white);opacity:.9;
 }
 .hero-in{position:relative}
-/* Reserve a lane on the right for the sweep so no line of copy ever crosses it. */
-@media(min-width:900px){
-  .hero-in{display:grid;grid-template-columns:minmax(0,1fr) clamp(150px,22vw,320px)}
+/* Reserve a lane on the right for the sweep so no line of copy ever crosses it.
+   The lane has to cover the rotated shape's bounding box, which juts roughly
+   130px further left than the untransformed element does, so it is wider than
+   the sweep looks. Verified at 1000, 1100, 1280 and 1440. */
+@media(min-width:1000px){
+  .hero-in{display:grid;grid-template-columns:minmax(0,1fr) clamp(320px,30vw,440px)}
   .hero-in > *{grid-column:1}
 }
 .eyebrow{
@@ -198,9 +201,9 @@ ul,ol{margin:0;padding:0;list-style:none}
   font-size:14px;font-weight:500;color:var(--white);
   border:1px solid rgba(255,255,255,.34);border-radius:999px;padding:6px 15px;
 }
-@media(max-width:899px){
-  /* Narrow screens have no room for the diagonal without running it through the
-     headline, so the red moves to a hard bottom edge instead. */
+@media(max-width:999px){
+  /* Narrower than this there is no room for the diagonal without running it
+     through the copy, so the red moves to a hard bottom edge instead. */
   .hero-sweep{display:none}
   .hero{border-bottom:7px solid var(--red-600)}
 }
