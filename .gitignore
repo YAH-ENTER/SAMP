@@ -11,3 +11,7 @@ $RECYCLE.BIN/
 # local scratch
 *.log
 .cache/
+
+# zips are build output, not source
+_zips/*.zip
+!_zips/.gitkeep
