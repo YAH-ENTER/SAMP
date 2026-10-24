@@ -6,12 +6,29 @@ relative paths so it can be lifted straight onto its own domain.
 | Project | What it is | Status |
 |---|---|---|
 | `joses-painting/` | Jose's Painting Services — Woodbridge, VA residential painter | Built, not launched |
+| `wicked-roadside/` | Wicked Roadside Assistance — flat $85 towing, AAA certified, nationwide | Built, waiting on owner answers |
+| `pro-roofing/` | PRO Roofing — Lorton, VA roofing contractor, rebuild of proroofingpros.com | Built, waiting on owner answers |
 | `_zips/` | Generated delivery zips, one per sample | gitignored |
+
+`pro-roofing/` is the first multi-page sample in here — twelve pages rather than
+one `index.html`. It has its own `NOTES.md` covering the logo rebuild, the
+hand-rolled 3D roof figure on the home page, how the three damage articles were
+sourced, and the six things only the owner can answer. Read that before the site
+goes anywhere.
+
+`wicked-roadside/` has a BEFORE LAUNCH block at the top of its `index.html`
+listing six things only the owner can answer, including hours and the AAA
+certification number. Read that block before the site goes anywhere.
 
 ## Working in here
 
-Each project is plain HTML, CSS and JS. No build step, no dependencies, no
-package manager. Open the folder, edit the files.
+Each project is plain HTML, CSS and JS. No build step, no package manager. Open
+the folder, edit the files.
+
+One exception so far: `pro-roofing` loads Three.js from a CDN through an import
+map, for the roof model in its hero. There is still nothing to install or
+compile, but that page needs a connection to draw the model. See its `NOTES.md`
+for why that tradeoff was taken.
 
 ## Previewing a sample
 
