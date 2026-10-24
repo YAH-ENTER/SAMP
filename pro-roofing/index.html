@@ -169,13 +169,13 @@
       <!-- 3D roof anatomy -->
       <figure class="roof3d" data-roof3d data-focus="0" style="margin:0">
         <canvas></canvas>
-        <span class="roof3d__corner roof3d__corner--tl">Roof anatomy &nbsp;/&nbsp; drag to turn &nbsp;/&nbsp; scroll to zoom</span>
+        <span class="roof3d__corner roof3d__corner--tl"><span class="r3d-cap--wide">Roof anatomy &nbsp;/&nbsp; drag to turn &nbsp;/&nbsp; <span class="r3d-cap__wheel">scroll</span><span class="r3d-cap__pinch">pinch</span> to zoom</span><span class="r3d-cap--narrow">Drag &middot; pinch to zoom</span></span>
         <span class="roof3d__corner roof3d__corner--tr">Live</span>
         <div class="roof3d__zoom">
           <button type="button" data-r3d-zoom="-5" aria-label="Zoom in">+</button>
           <button type="button" data-r3d-zoom="5" aria-label="Zoom out">&minus;</button>
         </div>
-        <p class="roof3d__hint">Tap a label to open that part</p>
+        <p class="roof3d__hint">Tap any part to open it</p>
         <div class="roof3d__panel" data-r3d-panel>
           <p class="roof3d__panel-title" data-r3d-title></p>
           <p class="roof3d__panel-body" data-r3d-body></p>

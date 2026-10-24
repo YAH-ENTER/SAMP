@@ -264,3 +264,32 @@
     if (bg) bg.setAttribute("aria-expanded", "false");
   });
 })();
+
+/* ---- colour follows the reader on a touch screen --------------------------
+   The photography is monochrome and comes back to colour on hover. A phone has
+   no cursor, so on a phone it never came back at all.
+
+   This lights whichever image is crossing the middle of the screen. The
+   rootMargin leaves a band roughly a sixth of the viewport tall through the
+   centre; an image is lit while it crosses that band, so colour tracks down the
+   page as you scroll. The work is the observer's, not a scroll handler's, so it
+   costs nothing per frame.
+
+   Only on (hover: none). Anything with a cursor keeps the hover behaviour.
+--------------------------------------------------------------------------- */
+(function () {
+  if (!("IntersectionObserver" in window)) return;
+  if (!window.matchMedia || !window.matchMedia("(hover: none)").matches) return;
+
+  var targets = document.querySelectorAll("a.card, .gal img, .floatcard, .filmstrip");
+  if (!targets.length) return;
+
+  var io = new IntersectionObserver(function (entries) {
+    entries.forEach(function (e) {
+      if (e.isIntersecting) e.target.classList.add("is-lit");
+      else e.target.classList.remove("is-lit");
+    });
+  }, { rootMargin: "-42% 0px -42% 0px", threshold: 0 });
+
+  Array.prototype.forEach.call(targets, function (t) { io.observe(t); });
+})();

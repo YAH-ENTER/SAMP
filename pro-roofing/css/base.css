@@ -1177,3 +1177,143 @@ td b { color: var(--green-pale); }
 @media (min-width: 1080px) {
   .roof3d { aspect-ratio: 1.42 / 1; }
 }
+
+/* ==========================================================================
+   PHONE
+   Written after auditing every page at 375px by measuring the DOM rather than
+   eyeballing screenshots. Nothing here changes the desktop layout.
+   ========================================================================== */
+
+/* ---- colour follows the reader on a touch screen -------------------------
+   The photography is monochrome and comes back to colour on hover. A phone has
+   no cursor, so on a phone it simply never came back. An observer in site.js
+   adds .is-lit to whichever image is crossing the middle of the screen, so the
+   colour tracks down the page as you scroll instead of waiting for a hover that
+   can never happen.
+
+   Scoped to (hover: none) so a mouse still drives it the way it always has, and
+   written against the same filters as the hover rules so the two cannot drift.
+-------------------------------------------------------------------------- */
+@media (hover: none) {
+  a.card.is-lit .card__media img   { filter: grayscale(0) contrast(1); }
+  .gal img.is-lit                  { filter: grayscale(0); }
+  .floatcard.is-lit img            { filter: grayscale(0) contrast(1); }
+  .filmstrip.is-lit .filmstrip__media img {
+    filter: grayscale(0) contrast(1.02) brightness(0.88);
+  }
+}
+
+/* ---- the model's corner captions stop colliding -------------------------
+   "Roof anatomy / drag to turn / scroll to zoom" measured 313px wide inside a
+   327px figure: it wrapped to two lines and ran underneath both the LIVE
+   caption and the zoom buttons. Now it stops short of that whole column.
+-------------------------------------------------------------------------- */
+.roof3d__corner--tl { max-width: calc(100% - 112px); }
+
+/* On a touch screen the gesture is a pinch, not a wheel, so say that. */
+.r3d-cap__pinch, .r3d-cap--narrow { display: none; }
+@media (pointer: coarse) {
+  .r3d-cap__wheel { display: none; }
+  .r3d-cap__pinch { display: inline; }
+}
+
+@media (max-width: 620px) {
+  /* On a phone the caption is its own short sentence: the full one wrapped to
+     two lines at a size you can actually read. */
+  .r3d-cap--wide { display: none; }
+  .r3d-cap--narrow { display: inline; white-space: nowrap; }
+  .roof3d__corner--tl,
+  .roof3d__corner--tr { top: 10px; }
+  .roof3d__corner--tl { left: 12px; }
+  .roof3d__corner--tr { right: 12px; }
+}
+
+/* ---- small type has a floor ----------------------------------------------
+   The mono labels run 0.62rem to 0.68rem, which is 9.9px to 10.9px. That is
+   fine on a desktop you lean into and too small on a phone held at arm's
+   length, so on a narrow screen they come up to about 12.5px.
+-------------------------------------------------------------------------- */
+@media (max-width: 720px) {
+  .stat__l, .crumbs, .toc h4, .toc a::before,
+  caption, th, .spec dt, .spec .k, .quote figcaption,
+  .field label, .field .err, .formnote,
+  .ftr h4, .ftr__bot p, .ftr__lic,
+  .card__idx, .floatcard figcaption,
+  .label, .hero__meta span, .card .go, .callout h4, .srcnote h4 {
+    font-size: 0.78rem;
+  }
+
+  /* the model's own labels stay tighter: the figure is only 327px wide and
+     they have to sit on the part they name without covering the house */
+  .roof3d__hint, .roof3d__backbtn, .r3d-mode { font-size: 0.72rem; }
+  .r3d-pin__txt { font-size: 0.68rem; }
+  .roof3d__corner { font-size: 0.72rem; }
+
+  /* A 560px table on a 375px screen swipes sideways, which works but loses the
+     row you are reading. Pinning the first column keeps the label in view. */
+  .tablewrap th:first-child,
+  .tablewrap td:first-child {
+    position: sticky;
+    left: 0;
+    background: var(--surface);
+    border-right: 1px solid var(--line);
+  }
+}
+
+/* The figure goes taller than it is wide on a phone. The house is broad, so in
+   a 4:3 box it fills the width and leaves no room above for the captions or
+   below for the hint — the chimney met the top edge and the hint sat on the
+   porch. A portrait box is width-limited, which puts the slack where the
+   furniture needs it. */
+@media (max-width: 620px) {
+  .roof3d {
+    aspect-ratio: 1 / 1.12;
+    min-height: 430px;
+  }
+  /* left-aligned, and short of the zoom row that now shares this edge */
+  .roof3d__hint {
+    left: 12px;
+    right: auto;
+    bottom: 12px;
+    transform: none;
+    max-width: calc(100% - 108px);
+  }
+}
+
+/* The zoom buttons move to the bottom on a phone. At the top of the figure they
+   sat behind the sticky header whenever the model was scrolled to the top of
+   the screen, which is exactly when someone reaches for them. */
+@media (max-width: 620px) {
+  .roof3d__zoom {
+    top: auto;
+    bottom: 12px;
+    right: 10px;
+    flex-direction: row;
+  }
+}
+
+/* ---- on a phone the markers lose their captions -------------------------
+   A caption is 52 to 148px wide and the figure is only 327px, so once the
+   overlap test had done its job only three of the fourteen parts were reachable
+   — which defeats the point of a roof anatomy model. Dropping to bare markers
+   lets nearly all of them through; the part's name arrives in the panel when
+   you tap it, which is where you were going to read it anyway.
+
+   The marker stays 9px but the button around it is 38px, so it is a real touch
+   target rather than a pixel hunt.
+-------------------------------------------------------------------------- */
+@media (max-width: 620px) {
+  .r3d-pin {
+    width: 38px;
+    height: 38px;
+    gap: 0;
+    display: grid;
+    place-items: center;
+  }
+  .r3d-pin__txt { display: none; }
+  .r3d-pin__dot { width: 11px; height: 11px; }
+
+  /* the focused part keeps its caption, so you can see which one is open */
+  .r3d-pin[data-active="1"] { width: auto; height: auto; display: inline-flex; gap: 8px; }
+  .r3d-pin[data-active="1"] .r3d-pin__txt { display: inline; }
+}

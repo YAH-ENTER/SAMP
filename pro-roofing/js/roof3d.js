@@ -558,7 +558,11 @@ class RoofModel {
     const fov = THREE.MathUtils.degToRad(this.camera.fov);
     const fitH = sphere.radius / Math.sin(fov / 2);
     const fitW = sphere.radius / Math.sin(Math.atan(Math.tan(fov / 2) * this.camera.aspect));
-    this.homeDist = Math.max(fitH, fitW) * 0.93;
+    // The bounding sphere is a conservative fit, so on a big figure it can be
+    // pulled in a little without losing anything. On a small one that same crop
+    // visibly clips the chimney and the porch steps, so there it sits back.
+    const small = Math.min(this.w, this.h) < 430;
+    this.homeDist = Math.max(fitH, fitW) * (small ? 1.04 : 0.93);
     this.homeTarget = sphere.center.clone();
     this.controls.target.copy(this.homeTarget);
     this.setOrbit(0.62, 1.30, this.homeDist);
@@ -619,6 +623,23 @@ class RoofModel {
     this.renderer.setSize(this.w, this.h, false);
     this.camera.aspect = this.w / this.h;
     this.camera.updateProjectionMatrix();
+
+    // The regions the figure's own captions, buttons and hint occupy, measured
+    // off the real elements rather than guessed from the width. CSS moves this
+    // furniture around between breakpoints, so reading it back is the only way
+    // the keep-outs stay true without being kept in step by hand.
+    this.chrome = [];
+    this.root.querySelectorAll(".roof3d__corner, .roof3d__zoom, .roof3d__hint")
+      .forEach((el) => {
+        const c = el.getBoundingClientRect();
+        if (!c.width || !c.height) return;
+        this.chrome.push({
+          x0: c.left - r.left - 6, y0: c.top - r.top - 6,
+          x1: c.right - r.left + 6, y1: c.bottom - r.top + 6
+        });
+      });
+    this._pinSig = null;          // the keep-outs moved, so re-place the labels
+
     if (this.homeDist) {
       const keep = this.focused;
       this.frameHouse();
@@ -679,8 +700,17 @@ class RoofModel {
       const s = v.clone().project(this.camera);
       const x = (s.x * 0.5 + 0.5) * this.w;
       const y = (-s.y * 0.5 + 0.5) * this.h;
-      const pad = this.w < 520 ? 14 : 40;
-      const inFrame = s.z < 1 && x > pad && x < this.w - pad && y > 26 && y < this.h - 26;
+      // The figure's own furniture owns parts of the frame: the captions across
+      // the top, the zoom column at the top right, the hint along the bottom. A
+      // label landing in any of them gets drawn behind a button, which on a
+      // phone is most of them, so treat those regions as out of frame.
+      const pad = this.w < 520 ? 12 : 40;
+      let inFrame = s.z < 1 && x > pad && x < this.w - pad && y > 26 && y < this.h - 26;
+      if (inFrame) {
+        const bw = (p.el.offsetWidth || 120) / 2, bh = (p.el.offsetHeight || 20) / 2;
+        inFrame = !this.chrome.some((c) =>
+          x + bw > c.x0 && x - bw < c.x1 && y + bh > c.y0 && y - bh < c.y1);
+      }
 
       let on = !hit && inFrame;
       if (this.focused) on = this.focused.id === p.spec.id && inFrame;

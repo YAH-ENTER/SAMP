@@ -104,3 +104,9 @@
 @media (min-width: 980px) {
   .asm-row { grid-template-columns: repeat(2, minmax(0, 1fr)); }
 }
+
+/* These load after base.css, so the phone type floor for the diagram labels
+   has to be set here or base.css's rule loses to the ones above. */
+@media (max-width: 720px) {
+  .asm__cap, .asm__note, .asm__key b { font-size: 0.78rem; }
+}
