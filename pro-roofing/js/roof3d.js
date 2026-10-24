@@ -164,6 +164,11 @@ function addShingles(parent) {
   g.computeVertexNormals();                    // non-indexed, so these stay crisp
   const m = new THREE.Mesh(g, MATS.shingle);
   m.castShadow = true; m.receiveShadow = true;
+  // The label occlusion test raycasts the house, and raycasting is CPU work with
+  // no acceleration structure behind it. These forty thousand triangles are
+  // forty thousand ray tests per label per frame, for nothing: a shingle sits on
+  // the roof deck, and the deck is already an occluder. So skip them.
+  m.raycast = () => {};
   parent.add(m);
   SHING.length = 0;
 }
@@ -448,9 +453,16 @@ class RoofModel {
     this.target = new THREE.Vector3(-2.6, 4.6, 0);
 
     this.renderer = new THREE.WebGLRenderer({ canvas: this.canvas, antialias: true, alpha: true });
-    this.renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+    // 2x on a retina panel is four times the fragments for a model that is
+    // already antialiased by MSAA; 1.75 is the better trade here.
+    this.renderer.setPixelRatio(Math.min(window.devicePixelRatio, 1.75));
     this.renderer.shadowMap.enabled = true;
     this.renderer.shadowMap.type = THREE.PCFSoftShadowMap;
+    // Neither the house nor the light ever moves, so the shadow map is the same
+    // every frame. Draw it once instead of re-rendering 44k triangles from the
+    // light's point of view sixty times a second.
+    this.renderer.shadowMap.autoUpdate = false;
+    this.renderer.shadowMap.needsUpdate = true;
     this.renderer.toneMapping = THREE.ACESFilmicToneMapping;
     this.renderer.toneMappingExposure = 1.7;
 
@@ -645,6 +657,15 @@ class RoofModel {
   // A label sits on its part, and a raycast decides whether anything stands in
   // front of it. That is exact, where the old depth-buffer sampling was not.
   placePins() {
+    // The model is stationary, so where the labels sit, and what hides them,
+    // only change when the camera moves. Recompute on that rather than every
+    // frame: in the steady state this does no work at all.
+    const sig = this.camera.position.toArray().concat(this.controls.target.toArray())
+      .map((n) => n.toFixed(3)).join(",") +
+      "|" + this.w + "x" + this.h + "|" + (this.focused ? this.focused.id : "");
+    if (sig === this._pinSig) return;
+    this._pinSig = sig;
+
     const cam = this.camera.position;
     const shown = [];
     this.pins.forEach((p) => {

@@ -521,3 +521,38 @@ Each plane is read as a bilinear patch from four corners, eave edge first. A hip
 or a gable return passes its apex twice; the patch collapses that edge on its own
 and the courses narrow into the point. Watch the corner order — the deck quads
 do not all start from the eave, so several planes pass a reordered set.
+
+### Why it went laggy, and what it actually was
+
+Adding the shingles took the model from 3.4k triangles to 44k and it started to
+stutter. The obvious suspect is the GPU. It was not.
+
+Measured, per frame: `placePins()` **120 ms**, `render()` 8 ms. The labels were
+the whole problem. Occlusion is tested by raycasting the house once per label,
+and `Raycaster` is CPU work with no acceleration structure behind it — so
+fourteen labels against 44k triangles is over half a million ray-triangle tests
+every frame, on the main thread. Before the shingles that was 48k tests and
+nobody noticed.
+
+Three fixes, in order of what they bought:
+
+- **Shingles are excluded from raycasts** (`mesh.raycast = () => {}`). They are
+  40k of the 44k triangles and they sit on the roof deck, which already occludes
+  everything they would. Nothing is lost.
+- **Labels are recomputed on camera change, not per frame.** The model is
+  stationary, so while it sits still neither the label positions nor what hides
+  them can change. Same idea as the old cached raster.
+- **The shadow map is drawn once.** Neither the house nor the light ever moves,
+  so re-rendering it from the light's view every frame was pure waste.
+
+Also capped the pixel ratio at 1.75: 2x on a retina panel is four times the
+fragments for a model MSAA has already smoothed.
+
+After: `placePins()` **0.003 ms** parked and **0.21 ms** mid-drag, against 120 ms
+before. Real frame timing over 50 frames is 16.6 ms median, 17.0 ms worst — a
+locked 60 fps with nothing dropped.
+
+The lesson worth keeping: in this model the triangle count is the GPU's problem
+and the GPU does not care. Anything that *raycasts* per frame is the thing to
+watch, and the fix is almost always to shrink what it can hit, or to stop asking
+when the answer cannot have changed.
