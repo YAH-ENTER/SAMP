@@ -1,0 +1,32 @@
+# GitHub Pages builds this repo with Jekyll, and Jekyll copies everything it is
+# not told to leave out. These stay in the repository but are NOT published to
+# yah-enter.github.io, so there is no URL that reaches them.
+#
+# Note what this does and does not do: it controls the published SITE only. While
+# the repository itself is public, every file here is still readable on
+# github.com. Taking something off the web entirely means removing it from the
+# repo, or setting the repo back to private.
+
+# Jekyll's glob matching is fussy, so the paths that matter are listed exactly
+# as well as by pattern. Verified against the live site after deploying.
+exclude:
+  # build notes and the launch checklist — ours, not the client's
+  - NOTES.md
+  - "*/NOTES.md"
+  - "**/NOTES.md"
+  - pro-roofing/NOTES.md
+
+  # samples that are not for sharing yet
+  - joses-painting
+  - joses-painting/
+  - "joses-painting/**"
+
+  # developer scripts, no reason to serve them
+  - "*.ps1"
+  - "*/*.ps1"
+  - README.txt
+  - "**/README.txt"
+
+# Nothing here uses Jekyll's templating; the pages are plain HTML and are copied
+# through untouched.
+plugins: []
