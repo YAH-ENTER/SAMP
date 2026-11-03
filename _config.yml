@@ -15,6 +15,7 @@ exclude:
   - "*/NOTES.md"
   - "**/NOTES.md"
   - pro-roofing/NOTES.md
+  - rendon-remodeling/NOTES.md
 
   # samples that are not for sharing yet
   - joses-painting
