@@ -27,6 +27,16 @@ Preview with `serve.ps1` from the SAMP folder, then
 <http://localhost:8099/rendon-remodeling/>. Opening the HTML as a `file://`
 URL breaks the relative paths.
 
+Published at <https://yah-enter.github.io/SAMP/rendon-remodeling/>. Note the
+repo root `index.html` redirects the Pages root to `pro-roofing/`, so this
+sample is only reachable by that deep link until the redirect is repointed.
+
+Before sending that link to the client: the repository is public, so the 247
+photographs under `img/` — their own photography, pulled from their media
+library — are publicly reachable once Pages serves them. That is normally fine
+for a pitch of their own site, but it is worth being a deliberate choice rather
+than a surprise.
+
 ---
 
 ## Taken from the live site, unchanged
