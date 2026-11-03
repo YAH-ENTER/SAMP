@@ -22,6 +22,17 @@ exclude:
   - joses-painting/
   - "joses-painting/**"
 
+  # pro-roofing: unpublished on request, until further notice. The files stay
+  # put and nothing is lost — deleting them is not what unpublishing means, and
+  # putting it back is a matter of removing these three lines.
+  #
+  # Done here rather than by switching GitHub Pages off, because a push to main
+  # rebuilds the site and brings a disabled Pages site back: it was turned off
+  # once and two pushes later it was serving again. An exclude survives pushes.
+  - pro-roofing
+  - pro-roofing/
+  - "pro-roofing/**"
+
   # developer scripts, no reason to serve them
   - "*.ps1"
   - "*/*.ps1"
