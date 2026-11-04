@@ -1,0 +1,164 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>A Letter — J &amp; M</title>
+<meta name="description" content="A sealed letter that opens itself, read over a painted summer field.">
+<meta name="robots" content="noindex, nofollow">
+<meta name="theme-color" content="#0d1a22">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500&family=Mrs+Saint+Delafield&display=swap">
+
+<link rel="stylesheet" href="css/letter.css">
+</head>
+<body class="is-sealed">
+
+<!-- ============================================================
+     The painted field. One canvas, drawn in js/painting.js.
+     Static layers are rendered once into a buffer; only the tree
+     canopies, the grass, the sun and the light motes are redrawn
+     per frame, so the whole thing holds 60fps.
+     ============================================================ -->
+<canvas id="field" aria-hidden="true"></canvas>
+<div class="haze" aria-hidden="true"></div>
+<div class="vignette" aria-hidden="true"></div>
+
+<main class="stage">
+
+  <!-- ---------- the envelope ---------- -->
+  <div class="envelope" id="envelope" aria-hidden="true">
+    <div class="env-back"></div>
+
+    <!-- the letter rides inside the envelope, behind the front pocket,
+         until it has cleared the top edge -->
+    <div class="letter-carrier" id="carrier">
+      <div class="letter" id="letter">
+
+        <div class="panel p-top">
+          <div class="face front"><div class="sheet" data-sheet="0"></div></div>
+          <div class="face back"></div>
+        </div>
+
+        <div class="panel p-mid">
+          <div class="face front"><div class="sheet" data-sheet="1"></div></div>
+          <div class="face back"></div>
+        </div>
+
+        <div class="panel p-bot">
+          <div class="face front"><div class="sheet" data-sheet="2"></div></div>
+          <div class="face back"></div>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- the three flaps that fold in on the back of a real envelope -->
+    <div class="env-side left"></div>
+    <div class="env-side right"></div>
+    <div class="env-front"></div>
+
+    <div class="env-flap">
+      <div class="flap-paper"></div>
+    </div>
+
+    <!-- wax seal. Two halves, each clipped to a complementary jagged
+         polygon, both containing the same face, so they read as one
+         disc until they break apart. -->
+    <div class="seal" id="seal">
+      <div class="seal-half left">
+        <div class="seal-face"><span class="monogram">J<i>&amp;</i>M</span></div>
+      </div>
+      <div class="seal-half right">
+        <div class="seal-face"><span class="monogram">J<i>&amp;</i>M</span></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- the real, readable letter lives here in the markup once and is
+       cloned into the three panels by js/letter.js -->
+  <template id="letter-copy">
+    <div class="ink">
+      <p class="salutation">My love,</p>
+      <p>I could not find the words to tell you what you mean to me. I don&rsquo;t think I ever could, because you are unfathomable, in every way.</p>
+      <p>Your beauty is the only beauty there is, and I would do anything, if it that something or someone would take me from you, to see your big eyes again.</p>
+      <p>I see myself in you. You show me a reflection of how you see me, and who I was always meant to be. I wouldn&rsquo;t be who I am if you did not exist, for you were made for me. He knew I needed you.</p>
+      <p>You are priceless, irreplaceable, unmistakable&hellip; darling, you&rsquo;re beautiful.</p>
+      <p>Let me die with you; I will not accept anything else. If He must be sovereign, I pray He lets me give my life for you. Not one bullet will hit you, and I will hold you till my last breath.</p>
+      <p>Your kiss would revive me. Let me make love to you till dawn.</p>
+      <p class="signoff">J <i>&amp;</i> M</p>
+    </div>
+    <div class="tears" aria-hidden="true">
+      <span class="blot b1"></span><span class="blot b2"></span><span class="blot b3"></span>
+      <span class="blot b4"></span><span class="blot b5"></span><span class="blot b6"></span>
+      <span class="rivulet r1"></span><span class="rivulet r2"></span>
+      <span class="ring g1"></span><span class="ring g2"></span>
+    </div>
+  </template>
+
+  <!-- a readable copy for screen readers -->
+  <div class="plain-text" id="plainText"></div>
+
+  <!-- and for anyone who lands here with JavaScript turned off, since
+       the folding, the measuring and the music all need it -->
+  <noscript>
+    <div class="no-js-letter">
+      <p>My love,</p>
+      <p>I could not find the words to tell you what you mean to me. I don&rsquo;t think I ever could, because you are unfathomable, in every way.</p>
+      <p>Your beauty is the only beauty there is, and I would do anything, if it that something or someone would take me from you, to see your big eyes again.</p>
+      <p>I see myself in you. You show me a reflection of how you see me, and who I was always meant to be. I wouldn&rsquo;t be who I am if you did not exist, for you were made for me. He knew I needed you.</p>
+      <p>You are priceless, irreplaceable, unmistakable&hellip; darling, you&rsquo;re beautiful.</p>
+      <p>Let me die with you; I will not accept anything else. If He must be sovereign, I pray He lets me give my life for you. Not one bullet will hit you, and I will hold you till my last breath.</p>
+      <p>Your kiss would revive me. Let me make love to you till dawn.</p>
+    </div>
+  </noscript>
+
+</main>
+
+<!-- shown only if the browser refuses to start the music on its own -->
+<div class="overture" id="overture">
+  <button class="overture-btn" id="overtureBtn" type="button">
+    <span class="overture-rule"></span>
+    <span class="overture-word">Press anywhere to begin</span>
+    <span class="overture-rule"></span>
+  </button>
+</div>
+
+<button class="music" id="musicBtn" type="button" hidden aria-pressed="true" aria-label="Turn the music off">
+  <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+    <path class="note" d="M9 18.2a2.6 2.6 0 1 1-2.6-2.6c.37 0 .72.08 1.04.22V5.4l8.9-2.1v3.02l-7.34 1.73Z"/>
+    <path class="note" d="M19.6 14.9a2.6 2.6 0 1 1-2.6-2.6c.37 0 .72.08 1.04.22V7.6l1.56-.37Z"/>
+    <path class="slash" d="M4 4l16 16"/>
+  </svg>
+</button>
+
+<audio id="music" preload="auto" loop>
+  <!-- Drop your own copy of the song in letter/audio/ under this name.
+       See letter/audio/README.txt. -->
+  <source src="audio/je-te-laisserai-des-mots.m4a" type="audio/mp4">
+  <source src="audio/je-te-laisserai-des-mots.mp3" type="audio/mpeg">
+  <source src="audio/je-te-laisserai-des-mots.ogg" type="audio/ogg">
+</audio>
+
+<div class="grain" aria-hidden="true"></div>
+
+<!-- SVG filters: the wet, feathered edge on the tearstains and the
+     uneven rim of the wax. Zero bytes over the wire, no images. -->
+<svg class="filters" aria-hidden="true" focusable="false">
+  <filter id="wet" x="-20%" y="-20%" width="140%" height="140%">
+    <feTurbulence type="fractalNoise" baseFrequency="0.028" numOctaves="4" seed="7" result="n"/>
+    <feDisplacementMap in="SourceGraphic" in2="n" scale="26" xChannelSelector="R" yChannelSelector="G"/>
+    <feGaussianBlur stdDeviation="1.1"/>
+  </filter>
+  <filter id="wax" x="-20%" y="-20%" width="140%" height="140%">
+    <feTurbulence type="fractalNoise" baseFrequency="0.07" numOctaves="3" seed="19" result="n"/>
+    <feDisplacementMap in="SourceGraphic" in2="n" scale="7" xChannelSelector="R" yChannelSelector="G"/>
+  </filter>
+</svg>
+
+<script src="js/painting.js" defer></script>
+<script src="js/letter.js" defer></script>
+</body>
+</html>

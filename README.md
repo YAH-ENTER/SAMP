@@ -8,6 +8,7 @@ relative paths so it can be lifted straight onto its own domain.
 | `joses-painting/` | Jose's Painting Services — Woodbridge, VA residential painter | Built, not launched |
 | `wicked-roadside/` | Wicked Roadside Assistance — flat $85 towing, AAA certified, nationwide | Built, waiting on owner answers |
 | `pro-roofing/` | PRO Roofing — Lorton, VA roofing contractor, rebuild of proroofingpros.com | Built, waiting on owner answers |
+| `letter/` | A digital letter. Not a client build | Live, waiting on the song file |
 | `_zips/` | Generated delivery zips, one per sample | gitignored |
 
 `pro-roofing/` is the first multi-page sample in here — twelve pages rather than
@@ -19,6 +20,14 @@ goes anywhere.
 `wicked-roadside/` has a BEFORE LAUNCH block at the top of its `index.html`
 listing six things only the owner can answer, including hours and the AAA
 certification number. Read that block before the site goes anywhere.
+
+`letter/` is the odd one out: a one-page digital letter rather than a site for
+anyone's business. It is published at
+<https://yah-enter.github.io/SAMP/letter/>, which is a public address even
+though the page is `noindex`. Its `NOTES.md` covers the fold geometry, the
+generated field, and the three lines in `_config.yml` that take it back off the
+web. The song it plays is not in the repository and has to be dropped into
+`letter/audio/`; see the README in that folder.
 
 ## Working in here
 
