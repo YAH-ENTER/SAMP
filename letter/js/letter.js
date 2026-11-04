@@ -64,59 +64,97 @@
     }
   }
 
-  function layout() {
-    /* clientWidth, not innerWidth: innerWidth counts the scrollbar, and
-       the scrollbar appears exactly when the letter is at its longest */
-    var vw = root.clientWidth;
-    var vh = root.clientHeight;
-
-    /* how wide the sheet reads at, and the type size that suits it */
-    var w = Math.round(Math.min(620, vw - (vw < 700 ? 26 : 48)));
-    w = Math.max(268, w);
-    var fs = Math.max(16, Math.min(21, Math.round(w / 29)));
-
-    root.style.setProperty("--letter-w", w + "px");
-    root.style.setProperty("--fs", fs + "px");
-
-    /* measure the writing off-screen at that exact width */
+  /* The writing is set to the page rather than the page to the writing:
+     the sheet is a fixed 8.5 by 11, and the type is sized to the largest
+     that still fits inside its margins. Eight measurements of a binary
+     search, off-screen, at the real width. */
+  function measureAt(w, fs) {
     var probe = document.createElement("div");
     probe.style.cssText =
       "position:absolute;left:-10000px;top:0;visibility:hidden;" +
       "pointer-events:none;width:" + w + "px;";
     var copy = tpl.content.cloneNode(true).querySelector(".ink");
+    copy.style.position = "static";
+    /* the variable, not font-size: the salutation and the signature are
+       sized off calc(var(--fs) * n), so overriding font-size alone would
+       measure them at whatever the last layout left on :root */
+    copy.style.setProperty("--fs", fs + "px");
+    copy.style.opacity = "1";
+    copy.style.filter = "none";
     probe.appendChild(copy);
     body.appendChild(probe);
-    var textH = Math.ceil(copy.getBoundingClientRect().height);
+    var h = copy.getBoundingClientRect().height;
     body.removeChild(probe);
+    return h;
+  }
 
-    var panel = Math.ceil(textH / 3);
+  function fitType(w, sheetH) {
+    var lo = 8, hi = 32, mid;
+    for (var i = 0; i < 8; i++) {
+      mid = (lo + hi) / 2;
+      if (measureAt(w, mid) <= sheetH) lo = mid; else hi = mid;
+    }
+    return Math.max(8, Math.floor(lo * 2) / 2);
+  }
+
+  function layout() {
+    /* clientWidth, not innerWidth: innerWidth counts the scrollbar, and
+       the scrollbar appears exactly when the letter is at its longest */
+    var vw = root.clientWidth;
+    var vh = root.clientHeight;
+    var gx = vw < 700 ? 16 : 48;
+    var gy = vw < 700 ? 24 : 56;
+
+    /* US Letter, held to 8.5 by 11 whichever way the screen is tighter */
+    var w = Math.min(820, vw - gx, Math.round((vh - gy) * 8.5 / 11));
+    w = Math.max(248, w);
+
+    var panel = Math.round(w * 11 / 8.5 / 3);
     var sheetH = panel * 3;
+    var margin = Math.round(w / 8.5);          /* one inch */
+
+    root.style.setProperty("--letter-w", w + "px");
+    root.style.setProperty("--margin", margin + "px");
+
+    var fs = fitType(w, sheetH);
+    root.style.setProperty("--fs", fs + "px");
+
+    /* In a window too small to hold a page at readable type, the sheet
+       is allowed to run long rather than cut the last paragraph off.
+       The proportions give way before the words do. */
+    var actual = measureAt(w, fs);
+    if (actual > sheetH) {
+      panel = Math.ceil(actual / 3);
+      sheetH = panel * 3;
+    }
     root.style.setProperty("--panel-h", panel + "px");
 
-    /* the envelope is built around the folded sheet, with a margin,
+    /* the envelope is built around the folded sheet, with a little room,
        so the letter genuinely fits inside the thing it comes out of */
-    var gx = Math.max(16, Math.round(w * 0.045));
-    var gy = Math.max(13, Math.round(panel * 0.075));
-    var envW = w + gx * 2;
-    var envH = panel + gy * 2;
-    var envFit = Math.min(1, (vh - 44) / envH, (vw - 20) / envW);
+    var ex = Math.max(14, Math.round(w * 0.04));
+    var ey = Math.max(11, Math.round(panel * 0.1));
+    var envW = w + ex * 2;
+    var envH = panel + ey * 2;
+    var envFit = Math.min(1, (vh - 40) / envH, (vw - 18) / envW);
 
     root.style.setProperty("--env-w", envW + "px");
     root.style.setProperty("--env-h", envH + "px");
     root.style.setProperty("--env-fit", envFit.toFixed(4));
 
-    /* Opened out, the sheet is three times as tall. If it very nearly
-       fits the screen, shrink it a little and keep everything in one
-       view. If it is nowhere near fitting — a phone, mostly — leave it
-       at full size and let the page scroll, which is how you would
-       read a long letter anyway. */
-    var need = (vh - 56) / sheetH;
+    /* The sheet is already sized to the screen, so this almost always
+       comes out at 1. It only bites on a window too short to hold a
+       page at the minimum width, and then the page scrolls. */
+    var need = (vh - gy) / sheetH;
     var fit, scroll;
     if (need >= 1) { fit = 1; scroll = false; }
     else if (need >= 0.84) { fit = need; scroll = false; }
     else { fit = 1; scroll = true; }
 
-    root.style.setProperty("--letter-scale", fit.toFixed(4));
+    /* The carrier sits inside the envelope, so it already carries the
+       envelope's fit scale. Divide it back out, or the open sheet reads
+       a few per cent under true size on a narrow screen — which would
+       defeat the point of setting it to 8.5 by 11 in the first place. */
+    root.style.setProperty("--letter-scale", (fit / envFit).toFixed(4));
 
     if (scroll) {
       var tall = Math.round(sheetH * fit + 96);

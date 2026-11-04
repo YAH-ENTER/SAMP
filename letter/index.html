@@ -10,7 +10,9 @@
 
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500&family=Mrs+Saint+Delafield&display=swap">
+<!-- IM Fell English is a digitisation of the Fell types cut in the 1600s,
+     inked edges and all. It carries most of the period feel on its own. -->
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IM+Fell+English:ital@0;1&family=IM+Fell+English+SC&family=Mrs+Saint+Delafield&display=swap">
 
 <link rel="stylesheet" href="css/letter.css">
 </head>
@@ -82,13 +84,21 @@
   <template id="letter-copy">
     <div class="ink">
       <p class="salutation">My love,</p>
-      <p>I could not find the words to tell you what you mean to me. I don&rsquo;t think I ever could, because you are unfathomable, in every way.</p>
-      <p>Your beauty is the only beauty there is, and I would do anything, if it that something or someone would take me from you, to see your big eyes again.</p>
+
+      <!-- a versal and a small-caps incipit, the way a page was opened
+           before anyone thought to call it a heading -->
+      <p class="opening"><span class="versal">I</span><span class="incipit">could not find the words</span> to tell you what you mean to me. I don&rsquo;t think I ever could, because you are unfathomable, in every way.</p>
+
+      <p class="dip">Your beauty is the only beauty there is, and I would do anything, if it is that something or someone would take me from you, to see your big eyes again.</p>
       <p>I see myself in you. You show me a reflection of how you see me, and who I was always meant to be. I wouldn&rsquo;t be who I am if you did not exist, for you were made for me. He knew I needed you.</p>
-      <p>You are priceless, irreplaceable, unmistakable&hellip; darling, you&rsquo;re beautiful.</p>
-      <p>Let me die with you; I will not accept anything else. If He must be sovereign, I pray He lets me give my life for you. Not one bullet will hit you, and I will hold you till my last breath.</p>
+      <p class="dry">You are priceless, irreplaceable, unmistakable&hellip; darling, you&rsquo;re beautiful.</p>
+      <p class="dip">Let me die with you; I will not accept anything else. If He must be sovereign, I pray He lets me give my life for you. Not one bullet will hit you, and I will hold you till my last breath.</p>
       <p>Your kiss would revive me. Let me make love to you till dawn.</p>
-      <p class="signoff">J <i>&amp;</i> M</p>
+
+      <p class="signoff">Jonathan Anthony</p>
+      <svg class="flourish" viewBox="0 0 220 24" aria-hidden="true" focusable="false">
+        <path d="M6 15 C 44 4, 86 4, 124 11 C 150 16, 176 15, 197 6 C 203 3.4, 209 6, 206 10 C 203 14, 195 14, 191 10"/>
+      </svg>
     </div>
     <div class="tears" aria-hidden="true">
       <span class="blot b1"></span><span class="blot b2"></span><span class="blot b3"></span>
@@ -107,11 +117,12 @@
     <div class="no-js-letter">
       <p>My love,</p>
       <p>I could not find the words to tell you what you mean to me. I don&rsquo;t think I ever could, because you are unfathomable, in every way.</p>
-      <p>Your beauty is the only beauty there is, and I would do anything, if it that something or someone would take me from you, to see your big eyes again.</p>
+      <p>Your beauty is the only beauty there is, and I would do anything, if it is that something or someone would take me from you, to see your big eyes again.</p>
       <p>I see myself in you. You show me a reflection of how you see me, and who I was always meant to be. I wouldn&rsquo;t be who I am if you did not exist, for you were made for me. He knew I needed you.</p>
       <p>You are priceless, irreplaceable, unmistakable&hellip; darling, you&rsquo;re beautiful.</p>
       <p>Let me die with you; I will not accept anything else. If He must be sovereign, I pray He lets me give my life for you. Not one bullet will hit you, and I will hold you till my last breath.</p>
       <p>Your kiss would revive me. Let me make love to you till dawn.</p>
+      <p class="no-js-sign">Jonathan Anthony</p>
     </div>
   </noscript>
 
@@ -135,10 +146,10 @@
 </button>
 
 <audio id="music" preload="auto" loop>
-  <!-- Drop your own copy of the song in letter/audio/ under this name.
-       See letter/audio/README.txt. -->
-  <source src="audio/je-te-laisserai-des-mots.m4a" type="audio/mp4">
+  <!-- The song lives in letter/audio/ and is not committed to the
+       repository. See letter/audio/README.txt. -->
   <source src="audio/je-te-laisserai-des-mots.mp3" type="audio/mpeg">
+  <source src="audio/je-te-laisserai-des-mots.m4a" type="audio/mp4">
   <source src="audio/je-te-laisserai-des-mots.ogg" type="audio/ogg">
 </audio>
 

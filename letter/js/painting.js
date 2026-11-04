@@ -184,9 +184,12 @@
   }
 
   function paintRanges(density) {
+    /* The far range is kept close in value to the sky it meets. Push it
+       darker and the horizon reads as one hard rule across the frame
+       rather than as distance. */
     var ranges = [
-      { y0: horizon - H * 0.105, amp: H * 0.03,  freq: 0.0013, ph: 1.1, h: 196, s: 26, l: 58, haze: 0.62, fill: "#8fb3bd" },
-      { y0: horizon - H * 0.042, amp: H * 0.021, freq: 0.0027, ph: 3.4, h: 168, s: 32, l: 42, haze: 0.24, fill: "#5e8470" }
+      { y0: horizon - H * 0.115, amp: H * 0.042, freq: 0.0011, ph: 1.1, h: 194, s: 22, l: 68, haze: 0.74, fill: "#aac6c8" },
+      { y0: horizon - H * 0.046, amp: H * 0.027, freq: 0.0026, ph: 3.4, h: 166, s: 30, l: 46, haze: 0.3,  fill: "#6d9078" }
     ];
 
     for (var k = 0; k < ranges.length; k++) {

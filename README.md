@@ -8,7 +8,7 @@ relative paths so it can be lifted straight onto its own domain.
 | `joses-painting/` | Jose's Painting Services — Woodbridge, VA residential painter | Built, not launched |
 | `wicked-roadside/` | Wicked Roadside Assistance — flat $85 towing, AAA certified, nationwide | Built, waiting on owner answers |
 | `pro-roofing/` | PRO Roofing — Lorton, VA roofing contractor, rebuild of proroofingpros.com | Built, waiting on owner answers |
-| `letter/` | A digital letter. Not a client build | Live, waiting on the song file |
+| `letter/` | A digital letter. Not a client build | Live; plays its song locally, silent at the public URL |
 | `_zips/` | Generated delivery zips, one per sample | gitignored |
 
 `pro-roofing/` is the first multi-page sample in here — twelve pages rather than
@@ -25,9 +25,12 @@ certification number. Read that block before the site goes anywhere.
 anyone's business. It is published at
 <https://yah-enter.github.io/SAMP/letter/>, which is a public address even
 though the page is `noindex`. Its `NOTES.md` covers the fold geometry, the
-generated field, and the three lines in `_config.yml` that take it back off the
-web. The song it plays is not in the repository and has to be dropped into
-`letter/audio/`; see the README in that folder.
+generated field, the 8.5-by-11 page, and the three lines in `_config.yml` that
+take it back off the web.
+
+The song it plays sits in `letter/audio/` on the working machine and is kept out
+of the repository on purpose, so the live page opens in silence while a local
+copy or a zip of the folder plays the track. See the README in that folder.
 
 ## Working in here
 

@@ -11,6 +11,9 @@ standing in a pointillist summer field, breaks its own wax, opens, lifts the
 folded sheet out, unfolds it, and brings the writing into focus. The song fades
 up as the envelope opens and is turned down once there is something to read.
 
+The sheet is a real page: 8.5 by 11, one-inch margins, set in Fell types and
+signed Jonathan Anthony.
+
 Static HTML. No build step, no framework, no dependencies, no images. Two
 webfonts from Google Fonts, and everything else is generated in the browser.
 
@@ -29,21 +32,18 @@ relative paths.
 
 ---
 
-## Three things only you can settle
+## Two things still open
 
-1. **The song is not here.** "Je Te Laisserai Des Mots" is Patrick Watson's
-   recording and not ours to redistribute, so `audio/` holds a README and
-   nothing else. Drop your own copy in as
-   `je-te-laisserai-des-mots.m4a` (or `.mp3`) and it plays. The fade-up and the
-   turn-down are already wired. Audio files in that folder are gitignored, so
-   adding one does not accidentally commit it.
+1. **The song plays here, but not at the published URL.** Your mp3 is in
+   `audio/je-te-laisserai-des-mots.mp3` and the page plays it: faded up as the
+   envelope opens, eased down to a quarter once the writing sharpens. It is kept
+   out of the repository by `audio/.gitignore`, because the recording is Patrick
+   Watson's and this repository and its Pages site are both public — committing
+   it would put a commercial track on an open address. So the full version lives
+   on this machine and in any zip of this folder; the live page opens in
+   silence. If the song has to reach someone, send them the folder.
 
-2. **A typo in the letter, left alone.** The second paragraph reads "I would do
-   anything, if it that something or someone would take me from you". That is
-   how you wrote it, and it is not mine to correct. Say the word and it changes;
-   otherwise it stays exactly as sent.
-
-3. **This is published to a public address.** `_config.yml` does not exclude
+2. **This is published to a public address.** `_config.yml` does not exclude
    this folder, so it is live at
    <https://yah-enter.github.io/SAMP/letter/> and the files are readable on
    github.com, since the repository itself is public. The page carries
@@ -156,22 +156,52 @@ SVG, so neither is a network request.
 
 ---
 
+## The setting
+
+IM Fell English, a digitisation of the types Bishop Fell brought to Oxford in
+the 1670s, with the inked and slightly uneven edges left in. It carries most of
+the period feel without anything else being done to it.
+
+On top of that: the text justified with hyphenation, a versal at the opening and
+the first few words in small capitals, paragraph indents of a line and a half,
+and the ink shifting density from paragraph to paragraph, the way it does when a
+nib runs dry and gets dipped again. The salutation and the signature are in a
+Spencerian script, and the signature has a pen flourish under it, drawn as four
+bezier curves rather than set as a character.
+
+No ruled lines. Ruling would read as an exercise book, and the paper already has
+its fibre and foxing.
+
 ## Sizing
 
-The sheet reads at up to 620px wide, 21px type. Opened out it is three times as
-tall, so:
+The page is US Letter, properly: **8.5 by 11, with one-inch margins**. The
+proportion is held, and the type is set to the page rather than the page to the
+type — a binary search of eight off-screen measurements finds the largest size
+that still fits inside the margins. That is why the type is around 17.5px on a
+1600-wide screen and around 11px on a phone. A letter-size page shrunk to the
+width of a phone really is that small; holding the ratio and lying about the
+scale would have been the worse answer. Pinch-zoom works.
 
-- if it fits the screen, it is shown at full size;
-- if it nearly fits (84% or more), it is scaled down to fit and stays in one
-  view;
-- below that it is left at full size and the page scrolls, which is how you
-  would read a long letter anyway.
+The sheet is sized against whichever way the screen is tighter, so it fits
+without scrolling at nearly every window size. Two safety valves behind that:
 
-The envelope is built around the folded sheet with a margin, so the letter
-genuinely fits inside the thing it comes out of. On a narrow screen that makes
-the envelope taller than it is wide. That is a consequence of the geometry, not
-a bug: the folded sheet's proportions are fixed by the width and the amount of
-text, and scaling cannot change them.
+- if the window is too small to hold a page at readable type, the sheet is
+  allowed to run longer than 11 inches rather than cut the last paragraph off —
+  the proportions give way before the words do;
+- if even that leaves the sheet taller than the window, the page scrolls.
+
+Two scale bugs worth remembering, both from the letter being a *child* of the
+envelope:
+
+- The measuring probe set `font-size` but not `--fs`. The salutation and the
+  signature are sized off `calc(var(--fs) * n)`, so they were being measured at
+  whatever the previous layout had left on `:root`, and the fitted size came out
+  wrong. The probe sets the variable now.
+- The envelope used to settle back 220px on the Z axis as the letter came out.
+  Under perspective that was quietly showing the open page at about 81% of true
+  size. The envelope now fades where it stands, and `--letter-scale` divides the
+  envelope's own fit scale back out. Measured after: the rendered sheet is
+  within 0.6% of its declared width, the rest being the wind.
 
 `clientWidth`, not `innerWidth`, throughout: `innerWidth` counts the scrollbar,
 and the scrollbar turns up exactly when the letter is at its longest. When the
@@ -183,11 +213,16 @@ page does scroll, `body` goes to `overflow: visible; height: auto` rather than
 
 ## Verified at build time
 
-No JavaScript errors. The only console entries are 404s for the three audio
-sources, which is expected until a file is dropped in. 60fps at 644×534, 54fps
-at 1600×900. No horizontal overflow at 375px, 644px or 1600px. The full letter
-reads on one screen at 375×812. The sequence was stepped through frame by frame:
-seal intact, wax broken, flap open, sheet risen, sheet flat, ink sharp.
+No JavaScript errors. 60fps at 644×534, 54fps at 1600×900. The page geometry
+measures 1.293 against a target of 1.294, and one inch comes out at 77px on a
+652px sheet. No horizontal overflow at 375px, 644px or 1600px. The whole letter
+reads on one screen at 375×812 and at 1600×900. The sequence was stepped through
+frame by frame: seal intact, wax broken, flap open, sheet risen, sheet flat, ink
+sharp. The song was confirmed playing from the mp3 and ducking to 0.2 on cue.
+
+One note on checking it in a preview pane: screenshots of an emulated viewport
+larger than the pane come back several seconds stale, which looks exactly like a
+page that failed to start. Query the DOM before believing a dark frame.
 
 `prefers-reduced-motion: reduce` skips the whole performance. No envelope, no
 wind, no grain animation, a still field, and the letter simply open and

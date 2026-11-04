@@ -29,12 +29,13 @@
 
   /* measured and set by JS once the letter has been laid out */
   --letter-w: 560px;
-  --panel-h: 300px;
+  --panel-h: 242px;
+  --margin: 66px;        /* one inch, at whatever the sheet's width is */
   --letter-scale: 1;
   --env-w: 600px;
-  --env-h: 352px;
+  --env-h: 282px;
   --env-fit: 1;
-  --fs: 20px;
+  --fs: 19px;
 
   --ease-paper: cubic-bezier(.22, .61, .36, 1);
   --ease-fold:  cubic-bezier(.33, .9, .28, 1);
@@ -52,8 +53,8 @@ html, body { height: 100%; }
 body {
   margin: 0;
   background: var(--dusk);
-  font-family: "EB Garamond", "Cormorant Garamond", "Hoefler Text",
-               "Baskerville Old Face", Garamond, "Times New Roman", serif;
+  font-family: "IM Fell English", "Hoefler Text", "Baskerville Old Face",
+               Baskerville, Garamond, "Times New Roman", serif;
   color: var(--ink);
   overflow: hidden;
   -webkit-font-smoothing: antialiased;
@@ -64,7 +65,15 @@ body {
    hands the overflow back to the viewport rather than making the body
    its own scroll box, which it would be at height:100% with overflow
    auto — and then window.scrollTo would have nothing to scroll. */
-body.can-scroll { overflow: visible; height: auto; min-height: 100%; }
+body.can-scroll {
+  /* clip, not hidden: it leaves the vertical axis free to scroll. The
+     envelope's layout box runs a little wider than the screen on a
+     phone, though it is scaled to fit on screen. */
+  overflow-x: clip;
+  overflow-y: visible;
+  height: auto;
+  min-height: 100%;
+}
 
 /* ---------- the painted field ---------- */
 
@@ -155,10 +164,11 @@ body.is-lit #field { opacity: 1; }
 }
 body.is-lit .envelope { opacity: 1; }
 
-/* the envelope settles back and dims once the letter is out */
-body.is-risen .envelope {
-  transform: scale(calc(var(--env-fit) * .94)) translate3d(0, 7%, -220px);
-}
+/* The envelope dims once the letter is out, but it does not move. It
+   used to settle back on the Z axis, which looked well enough until the
+   sheet became a true 8.5 by 11: the letter is a child of the envelope,
+   so retreating 220px under perspective was quietly showing the page at
+   about 81% of its proper size. It fades where it stands instead. */
 body.is-risen .env-back,
 body.is-risen .env-side,
 body.is-risen .env-front,
@@ -482,11 +492,19 @@ body.is-read .crease { opacity: .3; }
 .p-mid .sheet { --i: 1; }
 .p-bot .sheet { --i: 2; }
 
+/* The sheet is a page, so the writing sits inside its margins rather
+   than filling it. One inch all round, which is where --margin comes
+   from: the width divided by eight and a half. */
 .ink {
-  padding: calc(var(--fs) * 2.1) calc(var(--fs) * 2.4) calc(var(--fs) * 1.6);
+  position: absolute;
+  inset: 0;
+  padding: var(--margin);
   font-size: var(--fs);
-  line-height: 1.78;
+  line-height: 1.7;
   color: var(--ink);
+  text-align: justify;
+  hyphens: auto;
+  -webkit-hyphens: auto;
   opacity: .32;
   filter: blur(1.5px);
   transition: opacity 1.9s ease, filter 1.9s ease;
@@ -499,31 +517,62 @@ body.is-read .ink {
 }
 
 .ink p {
-  margin: 0 0 .86em;
-  text-indent: 1.4em;
-  hyphens: auto;
+  margin: 0 0 .72em;
+  text-indent: 1.6em;
 }
-.ink p:last-child { margin-bottom: 0; }
+.ink p:last-of-type { margin-bottom: 0; }
 
 .salutation {
   font-family: "Mrs Saint Delafield", cursive;
-  font-size: calc(var(--fs) * 2.5);
+  font-size: calc(var(--fs) * 2.4);
   line-height: 1;
   color: var(--ink-script);
+  text-align: left;
   text-indent: 0;
-  margin: 0 0 .34em -.06em;
+  margin: 0 0 .3em -.06em;
 }
+
+/* the opening: a versal, then the first few words in small capitals */
+.opening { text-indent: 0; }
+.versal {
+  float: left;
+  font-size: 2.9em;
+  line-height: .82;
+  padding: .04em .14em 0 0;
+  color: #32220f;
+}
+.incipit {
+  font-family: "IM Fell English SC", "IM Fell English", serif;
+  font-size: 1.06em;
+  letter-spacing: .04em;
+}
+
+/* a nib runs dry and then gets dipped again; the ink does not sit at
+   one density all the way down a handwritten page */
+.dip { color: #2f2012; }
+.dry { color: #4f3b26; }
+
 .signoff {
-  margin-top: 1.5em;
+  margin: 1.1em 0 0;
   text-align: right;
   text-indent: 0;
   font-family: "Mrs Saint Delafield", cursive;
-  font-size: calc(var(--fs) * 2.1);
-  line-height: 1;
+  font-size: calc(var(--fs) * 2.2);
+  line-height: 1.05;
   color: var(--ink-script);
-  opacity: .9;
 }
-.signoff i { font-style: normal; font-size: 1.1em; padding: 0 .04em; }
+.flourish {
+  display: block;
+  width: 48%;
+  max-width: 230px;
+  height: auto;
+  margin: -.25em 0 0 auto;
+  fill: none;
+  stroke: var(--ink-script);
+  stroke-width: 1.5;
+  stroke-linecap: round;
+  opacity: .82;
+}
 
 /* ---------- tears ---------- */
 
@@ -678,13 +727,15 @@ body.needs-press .overture {
   box-shadow: 0 40px 70px -30px rgba(10, 18, 14, .7);
 }
 .no-js-letter p { margin: 0 0 .9em; text-indent: 1.4em; }
-.no-js-letter p:first-child {
+.no-js-letter p:first-child,
+.no-js-letter .no-js-sign {
   text-indent: 0;
   font-family: "Mrs Saint Delafield", cursive;
   font-size: 2.3em;
   line-height: 1;
   margin-bottom: .3em;
 }
+.no-js-letter .no-js-sign { text-align: right; margin: .6em 0 0; }
 
 /* ---------- smaller screens ---------- */
 

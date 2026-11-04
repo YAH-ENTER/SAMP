@@ -4,19 +4,27 @@ The song goes here.
 The page looks for these three names, in this order, and plays the first
 one the browser can handle:
 
-    je-te-laisserai-des-mots.m4a    (AAC, best quality for the size)
-    je-te-laisserai-des-mots.mp3    (the safe fallback)
+    je-te-laisserai-des-mots.mp3    (there now, and what plays)
+    je-te-laisserai-des-mots.m4a
     je-te-laisserai-des-mots.ogg
 
-Drop your own copy of the file into this folder under one of those names
-and it will play. One file is enough; .m4a or .mp3 alone covers every
-browser in use.
+The mp3 is in this folder and the page plays it. One file is enough;
+.mp3 alone covers every browser in use.
 
-Nothing is committed here on purpose. "Je Te Laisserai Des Mots" is
-Patrick Watson's recording and it is not ours to redistribute, so the
-file is yours to supply. Putting it in this folder and pushing it
-publishes it: the SAMP repository is public, and so is the GitHub Pages
-site built from it.
+It is NOT in the repository, and that is deliberate rather than an
+oversight. The `.gitignore` next to this file keeps every audio file out
+of commits. "Je Te Laisserai Des Mots" is Patrick Watson's recording,
+and the SAMP repository is public, as is the GitHub Pages site built
+from it — so committing the file would put a commercial recording on an
+open address for anyone to download, which is not ours to do.
+
+What that means in practice:
+
+    locally, and in a delivery zip    the letter plays the song
+    at the published GitHub Pages URL the letter opens in silence
+
+If the song needs to reach someone over the web, hand them the folder or
+a zip of it rather than the public link.
 
 If the file is missing the page does not break. The seal still breaks
 and the sheet still unfolds, in silence, and the music switch in the
