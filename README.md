@@ -8,6 +8,7 @@ relative paths so it can be lifted straight onto its own domain.
 | `joses-painting/` | Jose's Painting Services — Woodbridge, VA residential painter | Built, not launched |
 | `wicked-roadside/` | Wicked Roadside Assistance — flat $85 towing, AAA certified, nationwide | Built, waiting on owner answers |
 | `pro-roofing/` | PRO Roofing — Lorton, VA roofing contractor, rebuild of proroofingpros.com | Built, waiting on owner answers |
+| `grandior-venue/` | Grandior Event Venue — Chantilly, VA event hall, concept redesign of grandiorvenue.com | Built, concept; see its `NOTES.md` |
 | `letter/` | A digital letter. Not a client build | Live; plays its song locally, silent at the public URL |
 | `_zips/` | Generated delivery zips, one per sample | gitignored |
 
