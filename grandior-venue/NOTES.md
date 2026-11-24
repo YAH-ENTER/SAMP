@@ -26,6 +26,16 @@ grandior-venue/
 
 No build step. Fonts come from Google Fonts; the map is a Google Maps embed.
 
+## Published
+
+Live at <https://yah-enter.github.io/SAMP/grandior-venue/> (GitHub Pages from
+`main`). The page stays `noindex` so it never competes with grandiorvenue.com
+in search. The URL still works for anyone it's sent to. The photos in `img/`
+are the client's own, from their site and Google profile, so they become
+publicly reachable too, which is normal for a pitch of their own site. To take
+it down, add `grandior-venue` to the `exclude:` list in `_config.yml`, as was
+done for pro-roofing.
+
 ## Design: the palace (revision 2)
 
 The first pass used the live site's olive and gold theme in a dark "digital"
@@ -126,8 +136,7 @@ Lato (body, as on the current site).
    or Formspree URL into `data-endpoint` on `#enquiry`.
 5. **Domain.** Remove `noindex` and uncomment the canonical / `og:url` in
    `index.html` when this replaces the live site.
-6. **Phone.** The live site and profile both list (510) 458-9232, a California
-   area code. Worth confirming it is the number they want on the new site.
+6. ~~**Phone.**~~ Confirmed by the client: +1 (510) 458-9232 is correct.
 
 ## Verified at build time
 
