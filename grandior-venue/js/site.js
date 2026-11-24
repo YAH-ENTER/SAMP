@@ -2,54 +2,74 @@
 (function () {
   "use strict";
 
+  var root = document.documentElement;
   var reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
   var $ = function (s, r) { return (r || document).querySelector(s); };
   var $$ = function (s, r) { return Array.prototype.slice.call((r || document).querySelectorAll(s)); };
 
-  /* ---- header state + hero pull-back -------------------------------- */
-  var head = $(".head");
-  var stage = $(".hero");
-  var ticking = false;
+  /* ---- opening: white screen, crest, then the storefront ------------ */
+  // The hero photo is decoded before anything moves, so the zoom never
+  // starts on a half-loaded image (the old lag/glitch).
+  var heroImg = $(".hero__media img");
+  var started = Date.now();
+  var opened = false;
+  requestAnimationFrame(function () { root.classList.add("crest"); });
 
+  function openPage() {
+    if (opened) return;
+    opened = true;
+    var wait = Math.max(0, (reduce ? 200 : 1100) - (Date.now() - started)); // let the crest be seen
+    setTimeout(function () {
+      root.classList.add("ready");
+      setTimeout(function () { var v = $(".veil"); if (v) v.remove(); }, 1500);
+    }, wait);
+  }
+  var decoded = heroImg && heroImg.decode ? heroImg.decode() : Promise.resolve();
+  var fonts = document.fonts && document.fonts.ready ? document.fonts.ready : Promise.resolve();
+  Promise.all([decoded.catch(function () {}), fonts]).then(openPage, openPage);
+  setTimeout(openPage, 3000); // never hold the page longer than this
+
+  /* ---- header state + hero parallax ---------------------------------- */
+  var head = $(".head");
+  var hero = $(".hero");
+  var ticking = false;
   function onScroll() {
     var y = window.scrollY || window.pageYOffset;
     head.classList.toggle("is-scrolled", y > 40);
-    if (stage && !reduce) {
-      // 0 at the top, 1 once the hero has scrolled half a screen (the
-      // sticky stage holds for that long, so the pull-back completes in view).
-      var p = Math.min(1, Math.max(0, y / (stage.offsetHeight - window.innerHeight || window.innerHeight * 0.5)));
-      stage.style.setProperty("--p", p.toFixed(4));
+    if (hero && !reduce) {
+      var p = Math.min(1, Math.max(0, y / hero.offsetHeight));
+      hero.style.setProperty("--p", p.toFixed(4));
     }
     ticking = false;
   }
   window.addEventListener("scroll", function () {
-    if (!ticking) { ticking = true; window.requestAnimationFrame(onScroll); }
+    if (!ticking) { ticking = true; requestAnimationFrame(onScroll); }
   }, { passive: true });
   onScroll();
 
   /* ---- mobile menu --------------------------------------------------- */
   var burger = $(".burger");
-  var nav = $("#menu");
-  function setNav(open) {
-    nav.classList.toggle("is-open", open);
+  var menu = $("#menu");
+  function setMenu(open) {
+    menu.classList.toggle("is-open", open);
     burger.setAttribute("aria-expanded", String(open));
     burger.setAttribute("aria-label", open ? "Close menu" : "Open menu");
     document.body.style.overflow = open ? "hidden" : "";
   }
-  burger.addEventListener("click", function () { setNav(!nav.classList.contains("is-open")); });
-  $$("a", nav).forEach(function (a) { a.addEventListener("click", function () { setNav(false); }); });
+  burger.addEventListener("click", function () { setMenu(!menu.classList.contains("is-open")); });
+  $$("a", menu).forEach(function (a) { a.addEventListener("click", function () { setMenu(false); }); });
 
-  /* ---- photographs settle from a zoom as they arrive ----------------- */
-  var zoomers = $$("[data-zoom]");
+  /* ---- scroll: text rises from a blur, photos open like curtains ----- */
+  var watched = $$("[data-reveal], [data-unveil]");
   if ("IntersectionObserver" in window && !reduce) {
     var io = new IntersectionObserver(function (entries) {
       entries.forEach(function (e) {
         if (e.isIntersecting) { e.target.classList.add("is-in"); io.unobserve(e.target); }
       });
-    }, { rootMargin: "0px 0px -12% 0px", threshold: 0.08 });
-    zoomers.forEach(function (el) { io.observe(el); });
+    }, { rootMargin: "0px 0px -10% 0px", threshold: 0.12 });
+    watched.forEach(function (el) { io.observe(el); });
   } else {
-    zoomers.forEach(function (el) { el.classList.add("is-in"); });
+    watched.forEach(function (el) { el.classList.add("is-in"); });
   }
 
   /* ---- gallery filters ----------------------------------------------- */
@@ -64,8 +84,7 @@
       });
       tiles.forEach(function (t) {
         var cats = (t.getAttribute("data-cat") || "").split(" ");
-        var show = f === "all" || cats.indexOf(f) > -1 || cats.indexOf("all") > -1;
-        t.classList.toggle("is-hidden", !show);
+        t.classList.toggle("is-hidden", !(f === "all" || cats.indexOf(f) > -1 || cats.indexOf("all") > -1));
       });
     });
   });
@@ -78,26 +97,18 @@
   var items = tiles.filter(function (t) { return t.hasAttribute("data-full"); });
   var current = -1;
   var lastFocus = null;
-
   function visibleItems() { return items.filter(function (t) { return !t.classList.contains("is-hidden"); }); }
-
   function render(i) {
     var list = visibleItems();
     if (!list.length) return;
     current = (i + list.length) % list.length;
     var t = list[current];
     var src = t.getAttribute("data-full");
-    var isVideo = t.getAttribute("data-type") === "video";
-    media.innerHTML = "";
     var el;
-    if (isVideo) {
+    media.innerHTML = "";
+    if (t.getAttribute("data-type") === "video") {
       el = document.createElement("video");
-      el.src = src;
-      el.controls = true;
-      el.playsInline = true;
-      el.autoplay = true;
-      el.loop = true;
-      el.muted = true;
+      el.src = src; el.controls = true; el.playsInline = true; el.autoplay = true; el.loop = true; el.muted = true;
       var poster = t.querySelector("img");
       if (poster) el.poster = poster.getAttribute("src");
     } else {
@@ -109,8 +120,7 @@
     capText.textContent = t.getAttribute("data-caption") || "";
     capCount.textContent = String(current + 1).padStart(2, "0") + " / " + String(list.length).padStart(2, "0");
   }
-
-  function open(tile) {
+  function openLb(tile) {
     lastFocus = document.activeElement;
     lb.hidden = false;
     document.body.style.overflow = "hidden";
@@ -118,39 +128,32 @@
     requestAnimationFrame(function () { lb.classList.add("is-open"); });
     $(".lb__close", lb).focus();
   }
-  function close() {
+  function closeLb() {
     lb.classList.remove("is-open");
     media.innerHTML = "";
     document.body.style.overflow = "";
-    setTimeout(function () { lb.hidden = true; }, reduce ? 0 : 300);
+    setTimeout(function () { lb.hidden = true; }, reduce ? 0 : 350);
     if (lastFocus) lastFocus.focus();
   }
-
-  items.forEach(function (t) {
-    $(".tile__btn", t).addEventListener("click", function () { open(t); });
-  });
-  $(".lb__close", lb).addEventListener("click", close);
+  items.forEach(function (t) { $(".tile__btn", t).addEventListener("click", function () { openLb(t); }); });
+  $(".lb__close", lb).addEventListener("click", closeLb);
   $(".lb__nav--prev", lb).addEventListener("click", function () { render(current - 1); });
   $(".lb__nav--next", lb).addEventListener("click", function () { render(current + 1); });
-  lb.addEventListener("click", function (e) { if (e.target === lb) close(); });
-
+  lb.addEventListener("click", function (e) { if (e.target === lb) closeLb(); });
   document.addEventListener("keydown", function (e) {
     if (lb.hidden) {
-      if (e.key === "Escape" && nav.classList.contains("is-open")) setNav(false);
+      if (e.key === "Escape" && menu.classList.contains("is-open")) setMenu(false);
       return;
     }
-    if (e.key === "Escape") close();
+    if (e.key === "Escape") closeLb();
     else if (e.key === "ArrowLeft") render(current - 1);
     else if (e.key === "ArrowRight") render(current + 1);
     else if (e.key === "Tab") {
-      // keep focus inside the viewer
-      var f = $$("button, video", lb);
-      var first = f[0], last = f[f.length - 1];
+      var f = $$("button, video", lb), first = f[0], last = f[f.length - 1];
       if (e.shiftKey && document.activeElement === first) { e.preventDefault(); last.focus(); }
       else if (!e.shiftKey && document.activeElement === last) { e.preventDefault(); first.focus(); }
     }
   });
-
   var sx = null;
   lb.addEventListener("touchstart", function (e) { sx = e.touches[0].clientX; }, { passive: true });
   lb.addEventListener("touchend", function (e) {
@@ -159,6 +162,91 @@
     if (Math.abs(dx) > 50) render(current + (dx < 0 ? 1 : -1));
     sx = null;
   });
+
+  /* ---- reviews carousel: rotates on its own, loops without a jump ---- */
+  (function () {
+    var car = $(".carousel");
+    if (!car) return;
+    var track = $(".carousel__track", car);
+    var dotsWrap = $(".carousel__dots", car);
+    var cards = $$(".quote", track);
+    var n = cards.length;
+    // Clones of every card follow the originals, so moving past the last
+    // review slides straight into the first one.
+    cards.forEach(function (c) {
+      var k = c.cloneNode(true);
+      k.setAttribute("aria-hidden", "true");
+      track.appendChild(k);
+    });
+    var i = 0, timer = null, paused = false;
+
+    var dots = cards.map(function (_, d) {
+      var b = document.createElement("button");
+      b.type = "button";
+      b.setAttribute("role", "tab");
+      b.setAttribute("aria-label", "Review " + (d + 1) + " of " + n);
+      b.addEventListener("click", function () { go(d); restart(); });
+      dotsWrap.appendChild(b);
+      return b;
+    });
+
+    function step() {
+      var all = track.children;
+      return all.length > 1 ? all[1].offsetLeft - all[0].offsetLeft : 0;
+    }
+    function place(animate) {
+      track.classList.toggle("no-anim", !animate);
+      track.style.transform = "translate3d(" + (-i * step()) + "px,0,0)";
+      dots.forEach(function (d, k) { d.setAttribute("aria-selected", String(k === i % n)); });
+    }
+    function go(to) { i = to; place(true); }
+    function next() { go(i + 1); }
+    function prev() {
+      if (i === 0) { i = n; place(false); void track.offsetWidth; }
+      go(i - 1);
+    }
+    track.addEventListener("transitionend", function (e) {
+      if (e.target !== track) return;
+      if (i >= n) { i = i - n; place(false); }
+    });
+
+    function restart() {
+      clearInterval(timer);
+      if (!reduce && !paused) timer = setInterval(next, 5500);
+    }
+    function pause(on) { paused = on; restart(); }
+    car.addEventListener("mouseenter", function () { pause(true); });
+    car.addEventListener("mouseleave", function () { pause(false); });
+    car.addEventListener("focusin", function () { pause(true); });
+    car.addEventListener("focusout", function () { pause(false); });
+    document.addEventListener("visibilitychange", function () { pause(document.hidden); });
+    $(".carousel__btn--next", car).addEventListener("click", function () { next(); restart(); });
+    $(".carousel__btn--prev", car).addEventListener("click", function () { prev(); restart(); });
+
+    var tx = null;
+    track.addEventListener("touchstart", function (e) { tx = e.touches[0].clientX; pause(true); }, { passive: true });
+    track.addEventListener("touchend", function (e) {
+      if (tx !== null) {
+        var dx = e.changedTouches[0].clientX - tx;
+        if (Math.abs(dx) > 40) { if (dx < 0) next(); else prev(); }
+      }
+      tx = null; pause(false);
+    });
+
+    window.addEventListener("resize", function () { place(false); });
+    place(false);
+    // Rotate only while the reviews are on screen, so a visitor arriving
+    // there starts at the first one.
+    var inView = false;
+    if ("IntersectionObserver" in window) {
+      new IntersectionObserver(function (es) {
+        inView = es[0].isIntersecting;
+        pause(!inView);
+      }, { threshold: 0.3 }).observe(car);
+    } else { restart(); }
+    var basePause = pause;
+    pause = function (on) { basePause(on || !inView); };
+  })();
 
   /* ---- enquiry form -------------------------------------------------- */
   var form = $("#enquiry");
@@ -172,8 +260,7 @@
       f.setAttribute("aria-invalid", String(!ok));
       return !ok;
     });
-    if (bad.length) { note.textContent = "Please fill in the highlighted fields."; bad[0].focus(); return; }
-
+    if (bad.length) { note.textContent = "A few fields still need filling in."; bad[0].focus(); return; }
     var d = {
       name: form.name.value.trim(), email: form.email.value.trim(), phone: form.phone.value.trim(),
       type: form.type.value, date: form.date.value, guests: form.guests.value.trim(), message: form.message.value.trim()
@@ -182,8 +269,8 @@
     if (endpoint) {
       note.textContent = "Sending…";
       fetch(endpoint, { method: "POST", headers: { "Content-Type": "application/json", Accept: "application/json" }, body: JSON.stringify(d) })
-        .then(function (r) { if (!r.ok) throw new Error(); form.reset(); note.textContent = "Thank you. We’ll be in touch shortly."; })
-        .catch(function () { note.textContent = "That didn’t send. Please call (510) 458-9232 or email info@grandiorvenue.com."; });
+        .then(function (r) { if (!r.ok) throw new Error(); form.reset(); note.textContent = "Thanks. We'll be in touch soon."; })
+        .catch(function () { note.textContent = "That didn't go through. Please call (510) 458-9232 or email info@grandiorvenue.com."; });
       return;
     }
     var body = "Name: " + d.name + "\nEmail: " + d.email + "\nPhone: " + d.phone +

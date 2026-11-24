@@ -3,8 +3,8 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Grandior Event Venue | Event Space in Chantilly, Northern Virginia</title>
-<meta name="description" content="Grandior Event Venue in Chantilly, VA. An elegant, spacious hall for weddings, receptions, birthdays, corporate galas, cultural celebrations and pop-ups. Stage, sound, projector and free parking.">
+<title>Grandior Event Venue | Event Hall in Chantilly, Virginia</title>
+<meta name="description" content="An event hall in Chantilly, VA for weddings, birthdays, company dinners and cultural celebrations. Stage, sound system, projector and free parking.">
 <meta name="theme-color" content="#13131B">
 <!-- Concept build. noindex until it replaces the live site, so it never
      competes with grandiorvenue.com in search. Remove on launch and
@@ -15,16 +15,19 @@
 
 <meta property="og:type" content="website">
 <meta property="og:title" content="Grandior Event Venue | Chantilly, VA">
-<meta property="og:description" content="Northern Virginia's event venue for unforgettable celebrations.">
+<meta property="og:description" content="An event hall in Chantilly for weddings, birthdays and celebrations.">
 <meta property="og:image" content="img/photos/storefront.webp">
 
 <link rel="icon" href="img/brand/favicon-32.png" sizes="32x32">
 <link rel="apple-touch-icon" href="img/brand/favicon-180.png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;500;600&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300;1,400;1,500&family=Lato:wght@300;400;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;500;600&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300;1,400&family=Lato:wght@300;400;700&display=swap" rel="stylesheet">
 <link rel="preload" as="image" href="img/photos/storefront.webp" fetchpriority="high">
 <link rel="stylesheet" href="css/site.css">
+<!-- Opening: the page starts on a white screen. Only when JS runs, so the
+     site is never hidden from someone without it. -->
+<script>document.documentElement.classList.add("intro");</script>
 
 <script type="application/ld+json">
 {
@@ -54,8 +57,11 @@
 <body>
 <a class="skip" href="#main">Skip to content</a>
 
-<!-- One ornament, drawn once and reused: a gilt rule with a pearl at its
-     centre and two soft scrolls. Curves only, nothing pointed. -->
+<!-- the white opening screen -->
+<div class="veil" aria-hidden="true">
+  <img class="veil__crest" src="img/brand/grandior-crest-gold.png" alt="" width="1118" height="941">
+</div>
+
 <svg width="0" height="0" style="position:absolute" aria-hidden="true">
   <defs>
     <linearGradient id="gilt" gradientUnits="userSpaceOnUse" x1="0" y1="0" x2="240" y2="0">
@@ -76,13 +82,15 @@
   </defs>
 </svg>
 
-<!-- ===================== header: the crest in its black banner ===================== -->
+<!-- ===================== header: always on screen, always with Book now ===================== -->
 <header class="head" id="top">
   <nav class="head__nav head__nav--l" aria-label="Main, left">
-    <a href="#space">The Space</a>
+    <a href="#space">The Hall</a>
     <a href="#events">Events</a>
     <a href="#gallery">Gallery</a>
   </nav>
+
+  <a class="head__book btn btn--gilt" href="#visit">Book now</a>
 
   <a class="banner" href="#top" aria-label="Grandior Event Venue, back to top">
     <img class="banner__crest" src="img/brand/grandior-crest-gold.png" alt="" width="1118" height="941">
@@ -92,7 +100,7 @@
   <nav class="head__nav head__nav--r" aria-label="Main, right">
     <a href="#reviews">Reviews</a>
     <a href="#visit">Visit</a>
-    <a class="head__cta" href="#visit">Plan your event</a>
+    <a class="btn btn--gilt" href="#visit">Book now</a>
   </nav>
 
   <button class="burger" type="button" aria-controls="menu" aria-expanded="false" aria-label="Open menu">
@@ -101,126 +109,124 @@
 </header>
 
 <nav class="menu" id="menu" aria-label="Main">
-  <a href="#space">The Space</a>
+  <a href="#space">The Hall</a>
   <a href="#events">Events</a>
   <a href="#gallery">Gallery</a>
   <a href="#reviews">Reviews</a>
   <a href="#visit">Visit</a>
-  <a class="btn btn--gilt" href="#visit">Plan your event</a>
+  <a href="tel:+15104589232">(510) 458-9232</a>
 </nav>
 
 <main id="main">
 
-<!-- ===================== hero: the storefront, full screen ===================== -->
+<!-- ===================== hero ===================== -->
 <section class="hero" aria-labelledby="hero-title">
-  <div class="hero__stage">
-    <figure class="hero__media">
-      <img src="img/photos/storefront.webp" srcset="img/photos/storefront-sm.webp 1000w, img/photos/storefront.webp 1600w" sizes="100vw" alt="The Grandior Event Venue storefront at Southpoint in Chantilly: red brick facade, green awnings and the gold Grandior sign under an evening sky" width="1600" height="1573" fetchpriority="high">
-    </figure>
-    <div class="hero__shade" aria-hidden="true"></div>
+  <div class="hero__media">
+    <img src="img/photos/storefront.webp" srcset="img/photos/storefront-sm.webp 1000w, img/photos/storefront.webp 1600w" sizes="100vw" alt="The Grandior Event Venue storefront at Southpoint in Chantilly: red brick, green awnings and the Grandior sign at dusk" width="1600" height="1573" fetchpriority="high">
+  </div>
+  <div class="hero__shade" aria-hidden="true"></div>
 
-    <div class="hero__copy">
-      <p class="kicker kicker--light">Chantilly &middot; Northern Virginia</p>
-      <h1 id="hero-title" class="hero__title">Your story deserves the <em>perfect setting.</em></h1>
-      <p class="hero__lede">Northern Virginia&rsquo;s event venue for weddings, receptions, birthdays, corporate galas and cultural celebrations.</p>
-      <div class="hero__actions">
-        <a class="btn btn--gilt" href="#visit">Book a tour</a>
-        <a class="btn btn--glass" href="#gallery">See the hall</a>
-      </div>
-      <p class="hero__address">24640 Southpoint Drive &middot; Suite 140 &middot; Open daily 9 AM &ndash; 10 PM</p>
+  <div class="hero__copy">
+    <p class="kicker kicker--light hero__in" style="--d:0">Chantilly, Virginia</p>
+    <h1 id="hero-title" class="display hero__title hero__in" style="--d:1">Your story deserves the <em>perfect setting.</em></h1>
+    <p class="hero__lede hero__in" style="--d:2">A marble-floored hall at Southpoint for weddings, birthdays, company dinners and family celebrations.</p>
+    <div class="hero__actions hero__in" style="--d:3">
+      <a class="btn btn--gilt" href="#visit">Book a tour</a>
+      <a class="btn btn--glass" href="#gallery">See the hall</a>
     </div>
+    <p class="hero__address hero__in" style="--d:4">24640 Southpoint Drive, Suite 140 &middot; Open daily, 9 AM to 10 PM</p>
   </div>
 </section>
 
 <!-- ===================== intro ===================== -->
-<section class="intro wrap" aria-labelledby="intro-title">
-  <svg class="ornament" aria-hidden="true"><use href="#ornament"/></svg>
-  <h2 id="intro-title" class="statement">A destination where every occasion is transformed into an unforgettable experience: the perfect blend of <em class="gilt-text">luxury, elegance and warmth.</em></h2>
+<section class="welcome wrap" aria-labelledby="intro-title">
+  <svg class="ornament" data-reveal aria-hidden="true"><use href="#ornament"/></svg>
+  <h2 id="intro-title" class="lead welcome__text" data-reveal style="--d:1">One large hall, set the way your event needs it. Rows of chairs for a ceremony, round tables for a banquet, or an open floor for a <em class="gilt-text">showcase or pop-up.</em></h2>
 
-  <dl class="facts">
-    <div><dt>Hours</dt><dd>9 AM &ndash; 10 PM</dd></div>
-    <div><dt>On stage</dt><dd>Sound, stage &amp; projector</dd></div>
-    <div><dt>Parking</dt><dd>Free on-site lot</dd></div>
-    <div><dt>Access</dt><dd>Step-free entrance, parking &amp; restroom</dd></div>
+  <dl class="facts" data-reveal style="--d:2">
+    <div><dt>Hours</dt><dd>9 AM to 10 PM, daily</dd></div>
+    <div><dt>In the room</dt><dd>Stage, sound system, projector</dd></div>
+    <div><dt>Parking</dt><dd>Free, in the lot outside</dd></div>
+    <div><dt>Access</dt><dd>Step-free entrance, parking and restroom</dd></div>
   </dl>
 </section>
 
-<!-- ===================== the space ===================== -->
+<!-- ===================== the hall: photos edge to edge ===================== -->
 <section class="space" id="space" aria-labelledby="space-title">
   <header class="sec-head wrap">
-    <p class="kicker"><span class="numeral">I</span> The Space</p>
-    <h2 id="space-title" class="title">A hall of <em class="gilt-text">porcelain and gold.</em></h2>
-    <p class="sec-head__copy">White marble floors, gilt-paneled walls and a long open hall that takes a red-carpet aisle, a full banquet or a pop-up floor plan with room to spare.</p>
+    <p class="kicker" data-reveal><span class="numeral">I</span> The hall</p>
+    <h2 id="space-title" class="display" data-reveal style="--d:1">A hall in <em class="gilt-text">white and gold.</em></h2>
+    <p class="sec-head__copy" data-reveal style="--d:2">The floor is white marble and the walls are trimmed in gold. It's a long, open room, so a red-carpet aisle runs down the middle with tables on both sides.</p>
   </header>
 
-  <figure class="plate plate--wide wrap" data-zoom>
-    <div class="plate__img"><img src="img/photos/hall-aisle.webp" srcset="img/photos/hall-aisle-sm.webp 1000w, img/photos/hall-aisle.webp 2400w" sizes="(min-width: 900px) 84vw, 100vw" alt="The full length of the Grandior hall: a red carpet aisle between rows of gold chiavari chairs and draped tables, gold-paneled white walls and hexagonal ceiling lights" width="2400" height="1743" loading="lazy"></div>
-    <figcaption>The hall, end to end</figcaption>
+  <figure class="bleed bleed--tall" data-unveil>
+    <img src="img/photos/hall-aisle.webp" srcset="img/photos/hall-aisle-sm.webp 1000w, img/photos/hall-aisle.webp 2400w" sizes="100vw" alt="The full length of the Grandior hall: a red carpet aisle between rows of gold chiavari chairs and draped tables, gold-paneled white walls and hexagonal ceiling lights" width="2400" height="1743" loading="lazy">
+    <figcaption class="bleed__cap">The hall, end to end</figcaption>
   </figure>
 
-  <div class="plates wrap">
-    <figure class="plate plate--arch" data-zoom>
-      <div class="plate__img"><img src="img/photos/hall-tables.webp" srcset="img/photos/hall-tables-sm.webp 1000w, img/photos/hall-tables.webp 2382w" sizes="(min-width: 900px) 40vw, 100vw" alt="Round tables in ivory satin with gold chiavari chairs and tall crystal floral centerpieces against gold-trimmed walls" width="2382" height="2160" loading="lazy"></div>
-      <figcaption>Banquet set in ivory and gold</figcaption>
+  <div class="bleed-pair">
+    <figure class="bleed" data-unveil>
+      <img src="img/photos/hall-tables.webp" srcset="img/photos/hall-tables-sm.webp 1000w, img/photos/hall-tables.webp 2382w" sizes="(min-width: 760px) 50vw, 100vw" alt="Round tables in ivory satin with gold chiavari chairs and tall crystal floral centerpieces against gold-trimmed walls" width="2382" height="2160" loading="lazy">
+      <figcaption class="bleed__cap">Round tables, set for dinner</figcaption>
     </figure>
-    <figure class="plate plate--offset" data-zoom>
-      <div class="plate__img"><img src="img/photos/stage-backdrop.webp" srcset="img/photos/stage-backdrop-sm.webp 1000w, img/photos/stage-backdrop.webp 2400w" sizes="(min-width: 900px) 44vw, 100vw" alt="The stage dressed with a gold arch, crystal strands, chandeliers and blush floral garlands over royal blue drapes" width="2400" height="1660" loading="lazy"></div>
-      <figcaption>The stage, dressed for a reception</figcaption>
+    <figure class="bleed" data-unveil style="--d:1">
+      <img src="img/photos/stage-backdrop.webp" srcset="img/photos/stage-backdrop-sm.webp 1000w, img/photos/stage-backdrop.webp 2400w" sizes="(min-width: 760px) 50vw, 100vw" alt="The stage dressed with a gold arch, crystal strands, chandeliers and blush floral garlands over royal blue drapes" width="2400" height="1660" loading="lazy">
+      <figcaption class="bleed__cap">The stage, set for a reception</figcaption>
     </figure>
   </div>
 </section>
 
-<!-- ===================== events: the royal blue hall ===================== -->
+<!-- ===================== events: over the blue velvet of the stage ===================== -->
 <section class="events" id="events" aria-labelledby="events-title">
   <div class="wrap">
-    <header class="sec-head sec-head--center">
-      <p class="kicker kicker--light"><span class="numeral">II</span> Events</p>
-      <h2 id="events-title" class="title">Every kind of <em>celebration.</em></h2>
-      <p class="sec-head__copy">Whatever you&rsquo;re hosting, our venue combines elegance, comfort and modern luxury to make the occasion shine.</p>
+    <header class="sec-head">
+      <p class="kicker kicker--light" data-reveal><span class="numeral">II</span> Events</p>
+      <h2 id="events-title" class="display" data-reveal style="--d:1">What we <em>host.</em></h2>
+      <p class="sec-head__copy" data-reveal style="--d:2">The room is set fresh for every booking. These are the events it's set up for.</p>
     </header>
 
-    <ol class="event-list">
-      <li><span>I</span>Weddings &amp; receptions</li>
-      <li><span>II</span>Engagements &amp; anniversaries</li>
-      <li><span>III</span>Birthdays &amp; family functions</li>
+    <ol class="event-list" data-reveal style="--d:2">
+      <li><span>I</span>Weddings and receptions</li>
+      <li><span>II</span>Engagements and anniversaries</li>
+      <li><span>III</span>Birthdays and family functions</li>
       <li><span>IV</span>Cultural celebrations</li>
-      <li><span>V</span>Corporate galas &amp; meetings</li>
-      <li><span>VI</span>Fundraisers &amp; nonprofit nights</li>
-      <li><span>VII</span>Jewelry showcases &amp; pop-ups</li>
-      <li><span>VIII</span>Intimate gatherings</li>
+      <li><span>V</span>Company dinners and meetings</li>
+      <li><span>VI</span>Fundraisers</li>
+      <li><span>VII</span>Jewelry showcases and pop-ups</li>
+      <li><span>VIII</span>Small private gatherings</li>
     </ol>
   </div>
 </section>
 
-<!-- ===================== why ===================== -->
-<section class="why wrap" aria-labelledby="why-title">
-  <figure class="why__media plate--arch" data-zoom>
-    <div class="plate__img"><img src="img/photos/mandap-stage.webp" srcset="img/photos/mandap-stage-sm.webp 1000w, img/photos/mandap-stage.webp 1080w" sizes="(min-width: 900px) 34vw, 100vw" alt="A ceremony stage with two carved gold thrones, white and gold drapes, a white floral canopy and lavender rose garlands" width="1080" height="1920" loading="lazy"></div>
+<!-- ===================== what comes with the room ===================== -->
+<section class="why" aria-labelledby="why-title">
+  <figure class="why__media bleed" data-unveil>
+    <img src="img/photos/mandap-stage.webp" srcset="img/photos/mandap-stage-sm.webp 1000w, img/photos/mandap-stage.webp 1080w" sizes="(min-width: 860px) 50vw, 100vw" alt="A ceremony stage with two carved gold thrones, white and gold drapes, a white floral canopy and lavender rose garlands" width="1080" height="1920" loading="lazy">
   </figure>
   <div class="why__copy">
-    <p class="kicker"><span class="numeral">III</span> Why Grandior</p>
-    <h2 id="why-title" class="title">Exceptional events <em class="gilt-text">for every occasion.</em></h2>
-    <ul class="why__list">
-      <li>Timeless design with modern amenities</li>
-      <li>Flexible space for any event type</li>
-      <li>Personalized planning and dedicated support</li>
-      <li>Exceptional culinary and hospitality experiences</li>
-      <li>A venue that turns your vision into a masterpiece</li>
+    <p class="kicker" data-reveal><span class="numeral">III</span> Why Grandior</p>
+    <h2 id="why-title" class="display" data-reveal style="--d:1">What comes <em class="gilt-text">with the room.</em></h2>
+    <ul class="why__list" data-reveal style="--d:2">
+      <li>A stage, a sound system and a projector, already set up</li>
+      <li>Enough tables and chairs for a full house</li>
+      <li>Free parking in the lot outside the door</li>
+      <li>A step-free entrance, parking and restroom</li>
+      <li>A team that helps you plan, then stays through the event</li>
     </ul>
-    <a class="btn btn--gilt" href="#visit">Plan your celebration</a>
+    <a class="btn btn--gilt" href="#visit" data-reveal style="--d:3">Book a tour</a>
   </div>
 </section>
 
 <!-- ===================== gallery ===================== -->
 <section class="gallery" id="gallery" aria-labelledby="gallery-title">
-  <header class="sec-head sec-head--center wrap">
-    <p class="kicker"><span class="numeral">IV</span> Gallery</p>
-    <h2 id="gallery-title" class="title">Memories captured <em class="gilt-text">at Grandior.</em></h2>
-    <div class="filters" role="group" aria-label="Filter the gallery">
+  <header class="sec-head wrap">
+    <p class="kicker" data-reveal><span class="numeral">IV</span> Gallery</p>
+    <h2 id="gallery-title" class="display" data-reveal style="--d:1">Inside <em class="gilt-text">Grandior.</em></h2>
+    <div class="filters" role="group" aria-label="Filter the gallery" data-reveal style="--d:2">
       <button type="button" class="is-on" data-filter="all" aria-pressed="true">All</button>
       <button type="button" data-filter="hall" aria-pressed="false">The Hall</button>
-      <button type="button" data-filter="stage" aria-pressed="false">Stage &amp; D&eacute;cor</button>
-      <button type="button" data-filter="exterior" aria-pressed="false">Exterior</button>
+      <button type="button" data-filter="stage" aria-pressed="false">Stage and D&eacute;cor</button>
+      <button type="button" data-filter="exterior" aria-pressed="false">Outside</button>
       <button type="button" data-filter="video" aria-pressed="false">Video</button>
     </div>
   </header>
@@ -228,47 +234,46 @@
   <!-- GALLERY ITEMS. Add a photo: copy a <figure>, set data-cat (hall, stage,
        exterior) and point data-full at the large file. Add a video: copy the
        video figure, set data-type="video", data-full to the .mp4 and the img to
-       its poster frame. Keep width/height so the grid doesn't jump. Tall tiles
-       (tile--h2) get an arched top. -->
-  <div class="grid wrap" id="grid">
-    <figure class="tile tile--w2" data-cat="video" data-type="video" data-full="img/video/grandior-reel.mp4" data-caption="The venue in motion: a slow pan through the hall, stage and storefront">
-      <button type="button" class="tile__btn" aria-label="Play video: the venue in motion">
+       its poster frame. Keep width/height so the grid doesn't jump. -->
+  <div class="grid" id="grid">
+    <figure class="tile tile--w2" data-cat="video" data-type="video" data-full="img/video/grandior-reel.mp4" data-caption="A slow pan through the hall, the stage and the storefront">
+      <button type="button" class="tile__btn" aria-label="Play video of the venue">
         <img src="img/video/grandior-reel-poster.webp" alt="" width="1280" height="720" loading="lazy">
         <span class="tile__play" aria-hidden="true"></span>
-        <span class="tile__tag">Video &middot; 0:12</span>
+        <span class="tile__tag">Video, 0:12</span>
       </button>
     </figure>
     <figure class="tile tile--h2" data-cat="exterior" data-full="img/photos/storefront.webp" data-caption="The storefront at Southpoint, Suite 140">
       <button type="button" class="tile__btn" aria-label="Open photo: the storefront">
-        <img src="img/photos/storefront-sm.webp" alt="Grandior storefront with green awnings and gold sign" width="1000" height="983" loading="lazy">
-        <span class="tile__tag">Exterior</span>
+        <img src="img/photos/storefront-sm.webp" alt="Grandior storefront with green awnings and the Grandior sign" width="1000" height="983" loading="lazy">
+        <span class="tile__tag">Outside</span>
       </button>
     </figure>
-    <figure class="tile" data-cat="hall" data-full="img/photos/hall-aisle.webp" data-caption="The hall set for a ceremony, red carpet down the center">
-      <button type="button" class="tile__btn" aria-label="Open photo: the hall with red carpet aisle">
+    <figure class="tile" data-cat="hall" data-full="img/photos/hall-aisle.webp" data-caption="The hall set for a ceremony, red carpet down the middle">
+      <button type="button" class="tile__btn" aria-label="Open photo: the hall with a red carpet aisle">
         <img src="img/photos/hall-aisle-sm.webp" alt="Red carpet aisle through the hall" width="1000" height="726" loading="lazy">
         <span class="tile__tag">The Hall</span>
       </button>
     </figure>
-    <figure class="tile tile--h2" data-cat="stage" data-full="img/photos/mandap-stage.webp" data-caption="A ceremony stage: gold thrones under a white floral canopy">
+    <figure class="tile tile--h2" data-cat="stage" data-full="img/photos/mandap-stage.webp" data-caption="A ceremony stage with two gold thrones under a white floral canopy">
       <button type="button" class="tile__btn" aria-label="Open photo: ceremony stage with gold thrones">
         <img src="img/photos/mandap-stage-sm.webp" alt="Gold thrones on a draped ceremony stage" width="1000" height="1778" loading="lazy">
-        <span class="tile__tag">Stage &amp; D&eacute;cor</span>
+        <span class="tile__tag">Stage and D&eacute;cor</span>
       </button>
     </figure>
-    <figure class="tile" data-cat="hall" data-full="img/photos/hall-tables.webp" data-caption="Banquet tables in ivory satin with crystal centerpieces">
+    <figure class="tile" data-cat="hall" data-full="img/photos/hall-tables.webp" data-caption="Round tables in ivory satin with crystal centerpieces">
       <button type="button" class="tile__btn" aria-label="Open photo: banquet tables">
         <img src="img/photos/hall-tables-sm.webp" alt="Banquet tables with gold chairs and floral centerpieces" width="1000" height="907" loading="lazy">
         <span class="tile__tag">The Hall</span>
       </button>
     </figure>
-    <figure class="tile tile--w2" data-cat="stage" data-full="img/photos/stage-backdrop.webp" data-caption="Gold arch, crystal strands and chandeliers over royal blue">
+    <figure class="tile tile--w2" data-cat="stage" data-full="img/photos/stage-backdrop.webp" data-caption="Gold arch, crystal strands and chandeliers over blue velvet">
       <button type="button" class="tile__btn" aria-label="Open photo: stage backdrop with gold arch">
         <img src="img/photos/stage-backdrop-sm.webp" alt="Stage backdrop with gold arch and chandeliers" width="1000" height="692" loading="lazy">
-        <span class="tile__tag">Stage &amp; D&eacute;cor</span>
+        <span class="tile__tag">Stage and D&eacute;cor</span>
       </button>
     </figure>
-    <figure class="tile" data-cat="hall stage" data-full="img/photos/ceremony-aisle.webp" data-caption="Aisle to the stage, lined with crystal floral stands">
+    <figure class="tile" data-cat="hall stage" data-full="img/photos/ceremony-aisle.webp" data-caption="The aisle to the stage, lined with crystal flower stands">
       <button type="button" class="tile__btn" aria-label="Open photo: aisle leading to the stage">
         <img src="img/photos/ceremony-aisle-sm.webp" alt="Red carpet aisle leading to a floral stage" width="1000" height="563" loading="lazy">
         <span class="tile__tag">The Hall</span>
@@ -282,37 +287,48 @@
   </div>
 </section>
 
-<!-- ===================== reviews ===================== -->
+<!-- ===================== reviews: auto-rotating, inside the page margins ===================== -->
 <section class="reviews" id="reviews" aria-labelledby="reviews-title">
-  <header class="sec-head sec-head--center wrap">
-    <p class="kicker"><span class="numeral">V</span> Reviews</p>
-    <h2 id="reviews-title" class="title">In our guests&rsquo; <em class="gilt-text">words.</em></h2>
-    <a class="link-gilt" href="https://search.google.com/local/reviews?placeid=ChIJ6eFdMwBBtokRFf5RwCnpANA" target="_blank" rel="noopener">Read all 29 reviews on Google &rarr;</a>
+  <header class="sec-head wrap">
+    <p class="kicker" data-reveal><span class="numeral">V</span> Reviews</p>
+    <h2 id="reviews-title" class="display" data-reveal style="--d:1">What guests <em class="gilt-text">say.</em></h2>
+    <a class="link-gilt" href="https://search.google.com/local/reviews?placeid=ChIJ6eFdMwBBtokRFf5RwCnpANA" target="_blank" rel="noopener" data-reveal style="--d:2">Read all 29 reviews on Google &rarr;</a>
   </header>
 
   <!-- Verbatim from the Google Business Profile, light trims marked with an
        ellipsis. Do not add a star average unless it matches the live profile. -->
-  <div class="quotes wrap" tabindex="0" aria-label="Guest reviews, scroll sideways for more">
-    <blockquote class="quote">
-      <p>The space is elegant, spacious, and perfectly arranged for managing a crowd. What truly stands out is the staff&hellip; they are incredibly attentive, professional, and ensure everything runs completely smoothly.</p>
-      <footer>Riteesh &middot; Google review</footer>
-    </blockquote>
-    <blockquote class="quote">
-      <p>The space is beautiful, clean, and very spacious. The management team was professional and incredibly helpful, making the planning process seamless and the event itself stress-free.</p>
-      <footer>Google review</footer>
-    </blockquote>
-    <blockquote class="quote">
-      <p>The venue is spacious, well-maintained, and comfortably accommodated our guests with ample chairs and tables. Parking was convenient&hellip; the audio and projector facilities were of great quality.</p>
-      <footer>Family event &middot; Google review</footer>
-    </blockquote>
-    <blockquote class="quote">
-      <p>As nonprofit founders, we hosted our fundraiser here&hellip; The venue was clean, well-maintained, and equipped with everything we needed, including a great sound system, a stage, and a projector.</p>
-      <footer>Fundraiser &middot; Google review</footer>
-    </blockquote>
-    <blockquote class="quote">
-      <p>We catered here for a wedding and the venue is great. Simple, elegant, very much budget friendly.</p>
-      <footer>Wedding caterer &middot; Google review</footer>
-    </blockquote>
+  <div class="wrap">
+    <div class="carousel" data-reveal style="--d:2" aria-roledescription="carousel" aria-label="Guest reviews">
+      <div class="carousel__viewport">
+        <div class="carousel__track">
+          <blockquote class="quote">
+            <p>The space is elegant, spacious, and perfectly arranged for managing a crowd. What truly stands out is the staff&hellip; they are incredibly attentive, professional, and ensure everything runs completely smoothly.</p>
+            <footer>Riteesh, Google review</footer>
+          </blockquote>
+          <blockquote class="quote">
+            <p>The space is beautiful, clean, and very spacious. The management team was professional and incredibly helpful, making the planning process seamless and the event itself stress-free.</p>
+            <footer>Google review</footer>
+          </blockquote>
+          <blockquote class="quote">
+            <p>The venue is spacious, well-maintained, and comfortably accommodated our guests with ample chairs and tables. Parking was convenient&hellip; the audio and projector facilities were of great quality.</p>
+            <footer>Family event, Google review</footer>
+          </blockquote>
+          <blockquote class="quote">
+            <p>As nonprofit founders, we hosted our fundraiser here&hellip; The venue was clean, well-maintained, and equipped with everything we needed, including a great sound system, a stage, and a projector.</p>
+            <footer>Fundraiser, Google review</footer>
+          </blockquote>
+          <blockquote class="quote">
+            <p>We catered here for a wedding and the venue is great. Simple, elegant, very much budget friendly.</p>
+            <footer>Wedding caterer, Google review</footer>
+          </blockquote>
+        </div>
+      </div>
+      <div class="carousel__controls">
+        <button class="carousel__btn carousel__btn--prev" type="button" aria-label="Previous review">&larr;</button>
+        <div class="carousel__dots" role="tablist" aria-label="Choose a review"></div>
+        <button class="carousel__btn carousel__btn--next" type="button" aria-label="Next review">&rarr;</button>
+      </div>
+    </div>
   </div>
 </section>
 
@@ -320,17 +336,18 @@
 <section class="visit" id="visit" aria-labelledby="visit-title">
   <div class="wrap visit__grid">
     <div class="visit__info">
-      <p class="kicker"><span class="numeral">VI</span> Visit &amp; book</p>
-      <h2 id="visit-title" class="title">Let Grandior be the stage for your <em class="gilt-text">most treasured memories.</em></h2>
+      <p class="kicker" data-reveal><span class="numeral">VI</span> Visit and book</p>
+      <h2 id="visit-title" class="display" data-reveal style="--d:1">Come see <em class="gilt-text">the hall.</em></h2>
+      <p class="visit__copy" data-reveal style="--d:2">Call, email or send the form, and we'll find a time to walk you through the room.</p>
 
-      <dl class="contact">
+      <dl class="contact" data-reveal style="--d:3">
         <div><dt>Address</dt><dd><a href="https://maps.google.com/?q=Grandior+Event+Venue,+24640+Southpoint+Dr+%23140,+Chantilly,+VA+20152" target="_blank" rel="noopener">24640 Southpoint Dr #140<br>Chantilly, VA 20152</a></dd></div>
         <div><dt>Phone</dt><dd><a href="tel:+15104589232">(510) 458-9232</a></dd></div>
         <div><dt>Email</dt><dd><a href="mailto:info@grandiorvenue.com">info@grandiorvenue.com</a></dd></div>
-        <div><dt>Hours</dt><dd>9 AM &ndash; 10 PM</dd></div>
+        <div><dt>Hours</dt><dd>9 AM to 10 PM, daily</dd></div>
       </dl>
 
-      <div class="social">
+      <div class="social" data-reveal style="--d:3">
         <a href="https://www.instagram.com/grandioreventvenueva" target="_blank" rel="noopener" aria-label="Instagram">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4.2"/><circle cx="17.3" cy="6.7" r=".9" fill="currentColor" stroke="none"/></svg>
         </a>
@@ -342,31 +359,31 @@
 
     <!-- Form opens the visitor's mail app. To send leads straight to an inbox,
          paste a Web3Forms / Formspree URL into data-endpoint. -->
-    <form class="form" id="enquiry" data-endpoint="" novalidate>
-      <p class="form__title">Request a date</p>
+    <form class="form" id="enquiry" data-endpoint="" novalidate data-reveal style="--d:2">
+      <p class="form__title">Ask about a date</p>
       <svg class="ornament ornament--sm" aria-hidden="true"><use href="#ornament"/></svg>
       <div class="field"><label for="f-name">Your name*</label><input id="f-name" name="name" autocomplete="name" required></div>
       <div class="field-row">
         <div class="field"><label for="f-email">Email*</label><input id="f-email" name="email" type="email" autocomplete="email" required></div>
-        <div class="field"><label for="f-phone">Contact number*</label><input id="f-phone" name="phone" type="tel" autocomplete="tel" required></div>
+        <div class="field"><label for="f-phone">Phone*</label><input id="f-phone" name="phone" type="tel" autocomplete="tel" required></div>
       </div>
       <div class="field-row">
-        <div class="field"><label for="f-type">Event type</label>
+        <div class="field"><label for="f-type">Event</label>
           <select id="f-type" name="type">
-            <option>Wedding / reception</option><option>Birthday / family function</option><option>Cultural celebration</option><option>Corporate event</option><option>Fundraiser</option><option>Showcase / pop-up</option><option>Something else</option>
+            <option>Wedding or reception</option><option>Birthday or family function</option><option>Cultural celebration</option><option>Company event</option><option>Fundraiser</option><option>Showcase or pop-up</option><option>Something else</option>
           </select>
         </div>
-        <div class="field"><label for="f-date">Preferred date</label><input id="f-date" name="date" type="date"></div>
+        <div class="field"><label for="f-date">Date you have in mind</label><input id="f-date" name="date" type="date"></div>
       </div>
-      <div class="field"><label for="f-guests">Approximate guests</label><input id="f-guests" name="guests" inputmode="numeric" placeholder="e.g. 120"></div>
-      <div class="field"><label for="f-msg">Tell us about your event*</label><textarea id="f-msg" name="message" rows="4" required></textarea></div>
+      <div class="field"><label for="f-guests">Roughly how many guests</label><input id="f-guests" name="guests" inputmode="numeric" placeholder="e.g. 120"></div>
+      <div class="field"><label for="f-msg">Tell us about it*</label><textarea id="f-msg" name="message" rows="4" required></textarea></div>
       <input class="hp" name="company" tabindex="-1" autocomplete="off" aria-hidden="true">
-      <button class="btn btn--gilt btn--block" type="submit">Send enquiry</button>
+      <button class="btn btn--gilt btn--block" type="submit">Send</button>
       <p class="form__note" role="status" aria-live="polite"></p>
     </form>
   </div>
 
-  <div class="map wrap">
+  <div class="map">
     <p class="map__fallback"><a href="https://maps.google.com/?q=Grandior+Event+Venue,+24640+Southpoint+Dr+%23140,+Chantilly,+VA+20152" target="_blank" rel="noopener">Open in Google Maps &rarr;</a></p>
     <iframe title="Map: Grandior Event Venue, 24640 Southpoint Dr, Chantilly VA" loading="lazy" referrerpolicy="no-referrer-when-downgrade" src="https://www.google.com/maps?q=Grandior+Event+Venue,+24640+Southpoint+Dr+%23140,+Chantilly,+VA+20152&amp;z=15&amp;output=embed"></iframe>
   </div>
@@ -380,11 +397,11 @@
     <img class="foot__crest" src="img/brand/grandior-crest-gold.png" alt="Grandior crest" width="1118" height="941" loading="lazy">
     <p class="foot__word">Grandior <span>Event Venue</span></p>
     <svg class="ornament" aria-hidden="true"><use href="#ornament"/></svg>
-    <p class="foot__tag">Celebrate in style. Craft beautiful moments. One celebration at a time.</p>
+    <p class="foot__tag">An event hall at Southpoint, Chantilly.</p>
     <nav class="foot__nav" aria-label="Footer">
-      <a href="#space">The Space</a><a href="#events">Events</a><a href="#gallery">Gallery</a><a href="#reviews">Reviews</a><a href="#visit">Visit</a><a href="brand.html">Brand kit</a>
+      <a href="#space">The Hall</a><a href="#events">Events</a><a href="#gallery">Gallery</a><a href="#reviews">Reviews</a><a href="#visit">Visit</a><a href="brand.html">Brand kit</a>
     </nav>
-    <p class="foot__legal">&copy; <span data-year>2026</span> Grandior Event Venue &middot; Chantilly, Virginia</p>
+    <p class="foot__legal">&copy; <span data-year>2026</span> Grandior Event Venue, Chantilly, Virginia</p>
   </div>
 </footer>
 

@@ -17,7 +17,9 @@ grandior-venue/
   index.html      one page: hero, intro, space, events, why, gallery, reviews, visit
   brand.html      logo kit, palette, type (noindex)
   css/site.css    everything
-  js/site.js      header, hero pull-back, zoom reveals, gallery filter + lightbox, form
+  js/site.js      opening screen, header, scroll reveals, gallery + lightbox,
+                  review carousel, form
+  DESIGN-PHILOSOPHY.md  the design thinkers this draws on, with sources (not published)
   img/photos/     6 real photographs, WebP at 2400w and 1000w (-sm)
   img/brand/      crest in gold / white / black (transparent PNG), crest in black
                   banner, round black seal, favicons (from the seal)
@@ -36,36 +38,49 @@ publicly reachable too, which is normal for a pitch of their own site. To take
 it down, add `grandior-venue` to the `exclude:` list in `_config.yml`, as was
 done for pro-roofing.
 
-## Design: the palace (revision 2)
+## Design (revision 3)
 
-The first pass used the live site's olive and gold theme in a dark "digital"
-frame. On review the client asked for a palace instead: a throne room, columns,
-ivory porcelain, gilt, prestige, and no jagged lines. The palette now comes from
-the venue's own photographs rather than its current website.
+Revision 1 used the live site's olive theme in a dark "digital" frame.
+Revision 2 moved to a palace look, with the palette sampled from the venue
+photos, and briefly tried a throne-room hero with drawn columns and a red
+carpet. Revision 3 keeps the palace palette and the black crest banner. It lets
+the client's photographs carry the page, edge to edge with no frames, and
+leaves the design around them quiet. The reasoning, and the designers behind
+it, are in `DESIGN-PHILOSOPHY.md`.
 
-- **Header**: a black band, with the crest hanging below it in a black banner
-  that has a fully rounded foot, a gilt inner line and a pearl. The crest's gold
-  needs black around it to hold its presence on a light page. The banner shrinks
-  on scroll.
-- **Hero**: the storefront fills the screen, as in revision 1, which the client
-  preferred. (A throne-room version with columns and a red carpet was tried and
-  dropped.) The headline, buttons and address sit in a dark band low on the
-  photo, below the sign. The focal point is set to `54% 40%` because the sign
-  sits right of centre, which keeps it whole on phones. On load the photo
-  pulls back from 1.3x. On scroll the stage stays pinned while the photo eases
-  into a porcelain frame with a gilt line, matching the photos further down.
-- **Shape language**: arches (plates, tall gallery tiles, review cards), pills
-  (buttons, filters, tags), circles (numerals, bullets, socials, lightbox
-  controls), pearls. Every corner is rounded.
-- **Inlay framing**: photos and the form sit in a porcelain gap with a gilt line
-  around them (`box-shadow` rings, so they follow the curves).
-- **Events** is the royal-blue velvet hall: soft vertical folds, a string of
-  pearls and gilt rules top and bottom.
-- **Ornament**: one inline SVG symbol (`#ornament`), a gilt rule with a pearl
-  and two leaf curves, reused under the intro, in the form and in the footer.
-- Section numbers are Roman numerals in gilt circles. The monospace HUD labels
-  from revision 1 are gone.
-- Wide gutters (up to 176px) and tall sections are kept from the first brief.
+- **Opening**: the page starts on a white screen, the crest fades in, and then
+  the storefront fades up. `site.js` waits for the hero photo to decode (and the
+  fonts to load) before anything moves, which fixed the stutter the old load-in
+  zoom had. The crest stays for at least 1.1 seconds, and the page is never held
+  longer than 3. Without JS there is no white screen.
+- **Header**: a fixed black band, with the crest in a black banner with a
+  rounded foot. "Book now" is a gilt button that never leaves the screen: on
+  the right of the nav on desktop, and on the left of the header on phones,
+  where the burger opens the rest.
+- **Hero**: the storefront fills the screen with a slow parallax on scroll. The
+  headline, buttons and address sit under the sign. The address is on a frosted
+  glass pill so it reads over the brick. Focal point `54% 40%`. On phones the
+  photo shifts up 16% at its normal size, so the whole sign shows above the
+  text.
+- **Photos**: full width. The hall is one tall band, then two photos side by
+  side, then the ceremony stage running to the left edge beside the "Why"
+  copy. The gallery spans the screen with 6px seams. The events section sits
+  over the blue-velvet stage photo, tinted navy.
+- **Scroll**: text rises out of a soft blur, and each photo opens from a
+  rounded inset to full bleed like a curtain. Staggered with `--d`.
+- **Reviews**: a carousel inside the page margins, three cards across on
+  desktop, two on tablets, one on phones. It rotates every 5.5 seconds only
+  while on screen, pauses on hover, focus, touch and hidden tabs, and loops
+  through clones so it never jumps back. Checked at 1440, 820 and 390px: equal
+  margins (115/115, 66/66, 31/31) and cards land flush after each slide.
+- **Type**: one scale of five sizes (`--t-display`, `--t-lead`, `--t-serif`,
+  `--t-body`, `--t-label`). Every section title matches the hero headline, and
+  every label, button and caption is 12px Cinzel.
+- **Copy**: rewritten with the humanizer rules: no inflated claims, no stock
+  triads, no dashes, plain verbs. Facts only from the client's site, Google
+  profile and reviews. The reviews are verbatim. The client's line "Your story
+  deserves the perfect setting" is kept.
+- Shape language is unchanged: arches, pills, circles and pearls, with no points.
 
 All motion is disabled under `prefers-reduced-motion`.
 
@@ -77,7 +92,7 @@ K-means and targeted hue sampling over the five interior photos.
 |---|---|---|---|
 | `--porcelain` | `#F8F8F4` | brightest marble floor | page ground |
 | `--marble` | `#EBEDE9` | floor in shade | alternate bands |
-| `--ivory` | `#E6E2DA` | table linen | column bodies |
+| `--ivory` | `#E6E2DA` | table linen | footer text, lines |
 | `--satin` | `#D9D3C0` | satin tablecloths | hairlines, inputs |
 | `--gold` | `#B29B4B` | chiavari chairs | gilt, rules, buttons, ornament |
 | `--gold-lit` | `#E0D1A7` | gold arch under stage light | gold on dark |
@@ -137,6 +152,10 @@ Lato (body, as on the current site).
 5. **Domain.** Remove `noindex` and uncomment the canonical / `og:url` in
    `index.html` when this replaces the live site.
 6. ~~**Phone.**~~ Confirmed by the client: +1 (510) 458-9232 is correct.
+7. **Catering.** The live site promises "exceptional culinary and hospitality
+   experiences", but one review is from an outside caterer. Until the owner
+   says whether food is in-house, outside, or both, the new copy leaves catering
+   out.
 
 ## Verified at build time
 

@@ -16,6 +16,9 @@ exclude:
   - "**/NOTES.md"
   - pro-roofing/NOTES.md
   - rendon-remodeling/NOTES.md
+  - grandior-venue/NOTES.md
+  - "*/DESIGN-PHILOSOPHY.md"
+  - grandior-venue/DESIGN-PHILOSOPHY.md
 
   # samples that are not for sharing yet
   - joses-painting
