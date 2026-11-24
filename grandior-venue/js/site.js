@@ -8,7 +8,6 @@
 
   /* ---- header state + hero pull-back -------------------------------- */
   var head = $(".head");
-  var hero = $(".hero");
   var stage = $(".hero");
   var ticking = false;
 
@@ -27,9 +26,9 @@
   }, { passive: true });
   onScroll();
 
-  /* ---- mobile nav ---------------------------------------------------- */
+  /* ---- mobile menu --------------------------------------------------- */
   var burger = $(".burger");
-  var nav = $("#nav");
+  var nav = $("#menu");
   function setNav(open) {
     nav.classList.toggle("is-open", open);
     burger.setAttribute("aria-expanded", String(open));

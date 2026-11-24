@@ -5,135 +5,143 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Brand kit | Grandior Event Venue</title>
 <meta name="robots" content="noindex, nofollow">
-<meta name="theme-color" content="#242109">
+<meta name="theme-color" content="#13131B">
 <link rel="icon" href="img/brand/favicon-32.png" sizes="32x32">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;500;600&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300;1,400&family=Lato:wght@300;400;700&family=IBM+Plex+Mono:wght@400&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;500;600&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300;1,400;1,500&family=Lato:wght@300;400;700&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="css/site.css">
 <style>
-  .kit { padding-block: calc(var(--sec) * .9) var(--sec); }
-  .kit h1 { margin: 22px 0 0; font: 300 clamp(40px, 5vw, 80px)/1 var(--f-disp); }
-  .kit h2 { margin: var(--sec) 0 32px; }
-  .kit__lede { max-width: 560px; margin: 26px 0 0; color: rgba(255,234,204,.78); }
+  .kit { padding-block: calc(var(--head) + 180px) var(--sec); text-align: center; }
+  .kit h1 { margin: 26px 0 0; font: 300 clamp(42px, 5vw, 82px)/1.04 var(--f-disp); color: var(--onyx); }
+  .kit__lede { max-width: 600px; margin: 26px auto 0; color: var(--ink-soft); }
+  .kit__sec { margin-top: var(--sec); }
+  .kit__sec > .kicker { margin-bottom: 44px; }
 
-  .logos { display: grid; grid-template-columns: repeat(3, 1fr); gap: clamp(12px, 1.6vw, 24px); }
-  .logo-card { margin: 0; border: 1px solid var(--line); }
-  .logo-card__stage { aspect-ratio: 4 / 3; display: grid; place-items: center; padding: 12%; }
+  .logos { display: grid; grid-template-columns: repeat(3, 1fr); gap: clamp(20px, 2vw, 32px); text-align: left; }
+  .logos--two { grid-template-columns: repeat(2, 1fr); margin-top: clamp(20px, 2vw, 32px); }
+  .logo-card { margin: 0; border-radius: var(--r); overflow: hidden; background: #fff; box-shadow: 0 0 0 1px rgba(178, 155, 75, .45), 0 30px 60px -40px rgba(19, 19, 27, .4); }
+  .logo-card__stage { aspect-ratio: 4 / 3; display: grid; place-items: center; padding: 11%; }
+  .logos--two .logo-card__stage { aspect-ratio: 16 / 10; padding: 6%; }
   .logo-card__stage img { max-height: 100%; width: auto; }
-  .logo-card__stage--dark { background: var(--night); }
-  .logo-card__stage--light { background: var(--parchment); }
+  .logo-card__stage--porcelain { background: radial-gradient(ellipse at 50% 30%, #fff, var(--marble)); }
+  .logo-card__stage--onyx { background: radial-gradient(ellipse at 50% 30%, #23242F, var(--onyx) 75%); }
+  .logo-card__stage--royal { background: radial-gradient(ellipse at 50% 30%, #24327E, var(--royal-deep)); }
   .logo-card__stage--check {
-    background-color: #c9c9c9;
-    background-image: linear-gradient(45deg, #9a9a9a 25%, transparent 25%), linear-gradient(-45deg, #9a9a9a 25%, transparent 25%),
-      linear-gradient(45deg, transparent 75%, #9a9a9a 75%), linear-gradient(-45deg, transparent 75%, #9a9a9a 75%);
-    background-size: 22px 22px; background-position: 0 0, 0 11px, 11px -11px, -11px 0;
+    background-color: #E6E6E2;
+    background-image: radial-gradient(circle, #D2D2CC 0 30%, transparent 31%);
+    background-size: 18px 18px;
   }
-  .logo-card figcaption { display: flex; justify-content: space-between; align-items: center; gap: 12px; padding: 16px 18px; font: 400 10.5px/1.4 var(--f-mono); letter-spacing: .16em; text-transform: uppercase; color: rgba(255,234,204,.75); }
-  .logo-card a { color: var(--gold); text-decoration: none; border-bottom: 1px solid currentColor; }
+  .logo-card figcaption { display: flex; justify-content: space-between; align-items: center; gap: 12px; padding: 18px 22px; font: 500 10.5px/1.4 var(--f-word); letter-spacing: .16em; text-transform: uppercase; color: var(--ink-soft); }
+  .logo-card a { color: var(--gold-ink); text-decoration: none; padding-bottom: 3px; background: var(--rule) bottom / 100% 1px no-repeat; }
 
-  .lockups { display: grid; grid-template-columns: 1fr 1fr; gap: clamp(12px, 1.6vw, 24px); margin-top: clamp(12px, 1.6vw, 24px); }
-  .lockup { display: flex; align-items: center; justify-content: center; gap: 22px; padding: clamp(36px, 5vw, 72px) 24px; border: 1px solid var(--line); }
-  .lockup img { width: clamp(64px, 7vw, 104px); }
-  .lockup .brand__name { font-size: clamp(26px, 3vw, 44px); }
-  .lockup .brand__sub { font-size: clamp(10px, 1vw, 14px); margin-top: 10px; }
-  .lockup--light { background: var(--parchment); }
-  .lockup--light .brand__name { color: var(--deep); }
-  .lockup--light .brand__sub { color: var(--bronze); }
+  .swatches { display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: clamp(16px, 1.6vw, 26px); text-align: left; }
+  .sw { margin: 0; border-radius: var(--r); overflow: hidden; background: #fff; box-shadow: 0 0 0 1px rgba(178, 155, 75, .35); }
+  .sw__chip { height: 130px; border-radius: 0 0 50% 50% / 0 0 22px 22px; }
+  .sw figcaption { padding: 16px 20px 22px; }
+  .sw b { display: block; font: 400 21px/1.2 var(--f-disp); color: var(--onyx); }
+  .sw code { display: block; margin-top: 6px; font: 500 12px/1.4 var(--f-word); letter-spacing: .12em; color: var(--gold-ink); }
+  .sw span { display: block; margin-top: 8px; font-size: 13.5px; line-height: 1.5; color: var(--ink-soft); }
 
-  .swatches { display: grid; grid-template-columns: repeat(auto-fill, minmax(190px, 1fr)); gap: clamp(12px, 1.4vw, 20px); }
-  .sw { margin: 0; border: 1px solid var(--line); }
-  .sw__chip { height: 130px; }
-  .sw figcaption { padding: 14px 16px 18px; }
-  .sw b { display: block; font: 400 20px/1.2 var(--f-disp); color: var(--parchment); }
-  .sw code { display: block; margin-top: 6px; font: 400 12px/1.4 var(--f-mono); letter-spacing: .1em; color: var(--gold); }
-  .sw span { display: block; margin-top: 8px; font-size: 13px; line-height: 1.5; color: rgba(255,234,204,.65); }
-
-  .type { display: grid; grid-template-columns: repeat(2, 1fr); gap: clamp(12px, 1.6vw, 24px); }
-  .type > div { border: 1px solid var(--line); padding: clamp(24px, 3vw, 44px); }
+  .type { display: grid; grid-template-columns: repeat(3, 1fr); gap: clamp(16px, 1.6vw, 26px); }
+  .type > div { border-radius: var(--r); background: #fff; padding: clamp(28px, 3vw, 48px); box-shadow: 0 0 0 1px rgba(178, 155, 75, .35); }
   .type p { margin: 0; }
-  .type small { display: block; margin-top: 14px; font: 400 10.5px/1.4 var(--f-mono); letter-spacing: .18em; text-transform: uppercase; color: rgba(255,234,204,.6); }
-  @media (max-width: 860px) { .logos, .lockups, .type { grid-template-columns: 1fr; } }
+  .type small { display: block; margin-top: 18px; font: 500 10.5px/1.5 var(--f-word); letter-spacing: .18em; text-transform: uppercase; color: var(--gold-ink); }
+  @media (max-width: 900px) { .logos, .logos--two, .type { grid-template-columns: 1fr; } }
 </style>
 </head>
 <body>
-<div class="frame" aria-hidden="true">
-  <span class="frame__tick frame__tick--tl"></span><span class="frame__tick frame__tick--tr"></span>
-  <span class="frame__tick frame__tick--bl"></span><span class="frame__tick frame__tick--br"></span>
-</div>
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <defs>
+    <linearGradient id="gilt" gradientUnits="userSpaceOnUse" x1="0" y1="0" x2="240" y2="0">
+      <stop offset="0" stop-color="#816B2D" stop-opacity="0"/><stop offset=".22" stop-color="#B29B4B"/><stop offset=".5" stop-color="#E0D1A7"/><stop offset=".78" stop-color="#B29B4B"/><stop offset="1" stop-color="#816B2D" stop-opacity="0"/>
+    </linearGradient>
+    <symbol id="ornament" viewBox="0 0 240 24">
+      <path d="M0 12 H92" stroke="url(#gilt)" stroke-width="1" fill="none"/><path d="M148 12 H240" stroke="url(#gilt)" stroke-width="1" fill="none"/>
+      <path d="M92 12 C98 4, 106 4, 108 12 C106 20, 98 20, 92 12 Z" fill="none" stroke="#B29B4B" stroke-width="1"/>
+      <path d="M148 12 C142 4, 134 4, 132 12 C134 20, 142 20, 148 12 Z" fill="none" stroke="#B29B4B" stroke-width="1"/>
+      <circle cx="120" cy="12" r="5.5" fill="#B29B4B"/><circle cx="120" cy="12" r="2.2" fill="#E0D1A7"/>
+    </symbol>
+  </defs>
+</svg>
 
-<header class="head is-scrolled">
-  <a class="brand" href="index.html" aria-label="Grandior Event Venue, home">
-    <img class="brand__crest" src="img/brand/grandior-crest-gold.png" alt="" width="1118" height="941">
-    <span class="brand__word"><span class="brand__name">Grandior</span><span class="brand__sub">Event Venue</span></span>
+<header class="head">
+  <nav class="head__nav head__nav--l" aria-label="Back"><a href="index.html">&larr; Back to site</a></nav>
+  <a class="banner" href="index.html" aria-label="Grandior Event Venue, home">
+    <img class="banner__crest" src="img/brand/grandior-crest-gold.png" alt="" width="1118" height="941">
+    <span class="banner__word">Grandior</span>
   </a>
-  <nav class="nav" aria-label="Main" style="position:static;opacity:1;visibility:visible;flex-direction:row;background:none">
-    <a class="nav__cta" href="index.html">Back to site</a>
-  </nav>
+  <nav class="head__nav head__nav--r" aria-label="Contact"><a class="head__cta" href="index.html#visit">Plan your event</a></nav>
 </header>
 
 <main class="kit wrap">
-  <p class="label"><span>&mdash;</span> Brand kit</p>
-  <h1>The Grandior <em>identity.</em></h1>
-  <p class="kit__lede">The crest in full colour, plus one-colour white and black versions on transparent backgrounds, and the palette taken from grandiorvenue.com. Click a file to download it.</p>
+  <p class="kicker">Brand kit</p>
+  <h1>The Grandior <em class="gilt-text">identity.</em></h1>
+  <p class="kit__lede">The crest in full gold, its black banner and seal, and one-colour white and black versions on transparent backgrounds. The palette is sampled from photographs of the hall itself. Click a file to download it.</p>
+  <svg class="ornament" style="margin-top:40px" aria-hidden="true"><use href="#ornament"/></svg>
 
-  <h2 class="title">Crest</h2>
-  <div class="logos">
-    <figure class="logo-card">
-      <div class="logo-card__stage logo-card__stage--check"><img src="img/brand/grandior-crest-gold.png" alt="Grandior crest, full colour" width="1118" height="941"></div>
-      <figcaption>Full colour &middot; PNG <a href="img/brand/grandior-crest-gold.png" download>Download</a></figcaption>
-    </figure>
-    <figure class="logo-card">
-      <div class="logo-card__stage logo-card__stage--dark"><img src="img/brand/grandior-crest-white.png" alt="Grandior crest, white" width="1118" height="941"></div>
-      <figcaption>White &middot; transparent PNG <a href="img/brand/grandior-crest-white.png" download>Download</a></figcaption>
-    </figure>
-    <figure class="logo-card">
-      <div class="logo-card__stage logo-card__stage--light"><img src="img/brand/grandior-crest-black.png" alt="Grandior crest, black" width="1118" height="941"></div>
-      <figcaption>Black &middot; transparent PNG <a href="img/brand/grandior-crest-black.png" download>Download</a></figcaption>
-    </figure>
-  </div>
-
-  <div class="lockups">
-    <div class="lockup">
-      <img src="img/brand/grandior-crest-white.png" alt="" width="1118" height="941">
-      <span class="brand__word"><span class="brand__name">Grandior</span><span class="brand__sub">Event Venue</span></span>
+  <section class="kit__sec">
+    <p class="kicker"><span class="numeral">I</span> The crest</p>
+    <div class="logos">
+      <figure class="logo-card">
+        <div class="logo-card__stage logo-card__stage--check"><img src="img/brand/grandior-crest-gold.png" alt="Grandior crest, full gold" width="1118" height="941"></div>
+        <figcaption>Full gold &middot; transparent <a href="img/brand/grandior-crest-gold.png" download>Download</a></figcaption>
+      </figure>
+      <figure class="logo-card">
+        <div class="logo-card__stage logo-card__stage--onyx"><img src="img/brand/grandior-crest-white.png" alt="Grandior crest, white" width="1118" height="941"></div>
+        <figcaption>White &middot; transparent <a href="img/brand/grandior-crest-white.png" download>Download</a></figcaption>
+      </figure>
+      <figure class="logo-card">
+        <div class="logo-card__stage logo-card__stage--porcelain"><img src="img/brand/grandior-crest-black.png" alt="Grandior crest, black" width="1118" height="941"></div>
+        <figcaption>Black &middot; transparent <a href="img/brand/grandior-crest-black.png" download>Download</a></figcaption>
+      </figure>
     </div>
-    <div class="lockup lockup--light">
-      <img src="img/brand/grandior-crest-black.png" alt="" width="1118" height="941">
-      <span class="brand__word"><span class="brand__name">Grandior</span><span class="brand__sub">Event Venue</span></span>
+    <div class="logos logos--two">
+      <figure class="logo-card">
+        <div class="logo-card__stage logo-card__stage--porcelain"><img src="img/brand/grandior-crest-banner.png" alt="Grandior crest in its black banner with a gilt inner line" width="1200" height="1300"></div>
+        <figcaption>Crest in black banner &middot; transparent <a href="img/brand/grandior-crest-banner.png" download>Download</a></figcaption>
+      </figure>
+      <figure class="logo-card">
+        <div class="logo-card__stage logo-card__stage--royal"><img src="img/brand/grandior-crest-seal.png" alt="Grandior crest on a round black seal with gilt rings" width="1024" height="1024"></div>
+        <figcaption>Round seal &middot; for social avatars <a href="img/brand/grandior-crest-seal.png" download>Download</a></figcaption>
+      </figure>
     </div>
-  </div>
+  </section>
 
-  <h2 class="title">Palette</h2>
-  <div class="swatches">
-    <figure class="sw"><div class="sw__chip" style="background:#242109"></div><figcaption><b>Olive Night</b><code>#242109</code><span>Header, footer and section ground</span></figcaption></figure>
-    <figure class="sw"><div class="sw__chip" style="background:#1C1B0F"></div><figcaption><b>Deep</b><code>#1C1B0F</code><span>Deepest ground, dark text on light</span></figcaption></figure>
-    <figure class="sw"><div class="sw__chip" style="background:#594D11"></div><figcaption><b>Bronze</b><code>#594D11</code><span>Button ground, accents on light</span></figcaption></figure>
-    <figure class="sw"><div class="sw__chip" style="background:#554E15"></div><figcaption><b>Bronze Contrast</b><code>#554E15</code><span>Header contrast ground</span></figcaption></figure>
-    <figure class="sw"><div class="sw__chip" style="background:#E0BF1B"></div><figcaption><b>Gold</b><code>#E0BF1B</code><span>Headings, primary buttons</span></figcaption></figure>
-    <figure class="sw"><div class="sw__chip" style="background:#CF921A"></div><figcaption><b>Amber</b><code>#CF921A</code><span>Link hover, input borders</span></figcaption></figure>
-    <figure class="sw"><div class="sw__chip" style="background:#DE9E1E"></div><figcaption><b>Marigold</b><code>#DE9E1E</code><span>Icon hover</span></figcaption></figure>
-    <figure class="sw"><div class="sw__chip" style="background:#E7AE33"></div><figcaption><b>Crest Gold</b><code>#E7AE33</code><span>Average gold of the crest artwork</span></figcaption></figure>
-    <figure class="sw"><div class="sw__chip" style="background:#FCEBCD"></div><figcaption><b>Parchment</b><code>#FCEBCD</code><span>Nav links, labels, light bands</span></figcaption></figure>
-    <figure class="sw"><div class="sw__chip" style="background:#FFEACC"></div><figcaption><b>Cream</b><code>#FFEACC</code><span>Body copy on dark</span></figcaption></figure>
-    <figure class="sw"><div class="sw__chip" style="background:#E3C69E"></div><figcaption><b>Champagne</b><code>#E3C69E</code><span>Submit buttons, soft accents</span></figcaption></figure>
-    <figure class="sw"><div class="sw__chip" style="background:#381616"></div><figcaption><b>Oxblood</b><code>#381616</code><span>Body copy on light</span></figcaption></figure>
-    <figure class="sw"><div class="sw__chip" style="background:#0D141A"></div><figcaption><b>Ink</b><code>#0D141A</code><span>Form text and borders</span></figcaption></figure>
-    <figure class="sw"><div class="sw__chip" style="background:#CC6333"></div><figcaption><b>Copper</b><code>#CC6333</code><span>Gradient stop; a single spark of warmth</span></figcaption></figure>
-  </div>
+  <section class="kit__sec">
+    <p class="kicker"><span class="numeral">II</span> Palette, from the hall</p>
+    <div class="swatches">
+      <figure class="sw"><div class="sw__chip" style="background:#F8F8F4;box-shadow:inset 0 -1px 0 #D9D3C0"></div><figcaption><b>Porcelain</b><code>#F8F8F4</code><span>The marble floor at its brightest. The page.</span></figcaption></figure>
+      <figure class="sw"><div class="sw__chip" style="background:#EBEDE9"></div><figcaption><b>Marble</b><code>#EBEDE9</code><span>The floor in shade. Alternate bands.</span></figcaption></figure>
+      <figure class="sw"><div class="sw__chip" style="background:#E6E2DA"></div><figcaption><b>Ivory</b><code>#E6E2DA</code><span>Table linen. Column bodies.</span></figcaption></figure>
+      <figure class="sw"><div class="sw__chip" style="background:#D9D3C0"></div><figcaption><b>Satin</b><code>#D9D3C0</code><span>The satin tablecloths. Hairlines, inputs.</span></figcaption></figure>
+      <figure class="sw"><div class="sw__chip" style="background:linear-gradient(110deg,#8C7531,#B29B4B 24%,#E9DDB5 50%,#B29B4B 76%,#8C7531)"></div><figcaption><b>Chiavari Gold</b><code>#B29B4B</code><span>The gold chairs. Gilt, rules, buttons, ornament.</span></figcaption></figure>
+      <figure class="sw"><div class="sw__chip" style="background:#E0D1A7"></div><figcaption><b>Lit Gilt</b><code>#E0D1A7</code><span>The gold arch under stage light. Gold on dark.</span></figcaption></figure>
+      <figure class="sw"><div class="sw__chip" style="background:#816B2D"></div><figcaption><b>Gilt Shadow</b><code>#816B2D</code><span>Gold in shadow. Large gold type on porcelain.</span></figcaption></figure>
+      <figure class="sw"><div class="sw__chip" style="background:#6E5A22"></div><figcaption><b>Gold Ink</b><code>#6E5A22</code><span>Small gold lettering on porcelain (6.3:1).</span></figcaption></figure>
+      <figure class="sw"><div class="sw__chip" style="background:#162156"></div><figcaption><b>Royal Velvet</b><code>#162156</code><span>The drape behind the stage. The events hall.</span></figcaption></figure>
+      <figure class="sw"><div class="sw__chip" style="background:#090F45"></div><figcaption><b>Velvet Fold</b><code>#090F45</code><span>The velvet in its folds.</span></figcaption></figure>
+      <figure class="sw"><div class="sw__chip" style="background:#C43043"></div><figcaption><b>Red Carpet</b><code>#C43043</code><span>The aisle runner, lit. Used once, under the arch.</span></figcaption></figure>
+      <figure class="sw"><div class="sw__chip" style="background:#AF1E2F"></div><figcaption><b>Carpet Shadow</b><code>#AF1E2F</code><span>The runner's edge. Form errors.</span></figcaption></figure>
+      <figure class="sw"><div class="sw__chip" style="background:#E9B1AA"></div><figcaption><b>Rose</b><code>#E9B1AA</code><span>The blush roses. Reserved for florals and accents.</span></figcaption></figure>
+      <figure class="sw"><div class="sw__chip" style="background:#13131B"></div><figcaption><b>Onyx</b><code>#13131B</code><span>The ceiling. The crest's banner, the footer.</span></figcaption></figure>
+      <figure class="sw"><div class="sw__chip" style="background:#232630"></div><figcaption><b>Ink</b><code>#232630</code><span>Body copy.</span></figcaption></figure>
+    </div>
+  </section>
 
-  <h2 class="title">Type</h2>
-  <div class="type">
-    <div><p style="font:500 44px/1 var(--f-word);letter-spacing:.14em;text-transform:uppercase;color:var(--parchment)">Grandior</p><small>Cinzel: wordmark and caps, after the storefront sign</small></div>
-    <div><p style="font:300 44px/1.1 var(--f-disp)">Your story deserves <em>the perfect setting.</em></p><small>Cormorant Garamond: headlines</small></div>
-    <div><p style="font:300 18px/1.7 var(--f-body)">Weddings, receptions, birthdays, corporate galas and cultural celebrations.</p><small>Lato: body copy, as on the current site</small></div>
-    <div><p style="font:400 13px/1.7 var(--f-mono);letter-spacing:.2em;text-transform:uppercase;color:var(--gold)">38.9365&deg; N &middot; 77.5401&deg; W</p><small>IBM Plex Mono: labels and the digital frame</small></div>
-  </div>
+  <section class="kit__sec">
+    <p class="kicker"><span class="numeral">III</span> Type</p>
+    <div class="type">
+      <div><p style="font:500 40px/1 var(--f-word);letter-spacing:.16em;text-transform:uppercase;color:var(--onyx)">Grandior</p><small>Cinzel: the wordmark and inscriptions, after the storefront sign</small></div>
+      <div><p style="font:300 38px/1.1 var(--f-disp);color:var(--onyx)">Your story deserves <em class="gilt-text">the perfect setting.</em></p><small>Cormorant Garamond: headlines</small></div>
+      <div><p style="font:300 18px/1.7 var(--f-body)">Weddings, receptions, birthdays, corporate galas and cultural celebrations.</p><small>Lato: body copy, as on the current site</small></div>
+    </div>
+  </section>
 </main>
 
 <footer class="foot">
   <div class="wrap foot__inner">
-    <img class="foot__crest" src="img/brand/grandior-crest-white.png" alt="Grandior crest" width="1118" height="941" loading="lazy">
+    <img class="foot__crest" src="img/brand/grandior-crest-gold.png" alt="Grandior crest" width="1118" height="941" loading="lazy">
     <p class="foot__legal">&copy; 2026 Grandior Event Venue</p>
   </div>
 </footer>

@@ -19,51 +19,71 @@ grandior-venue/
   css/site.css    everything
   js/site.js      header, hero pull-back, zoom reveals, gallery filter + lightbox, form
   img/photos/     6 real photographs, WebP at 2400w and 1000w (-sm)
-  img/brand/      crest in gold / white / black (transparent PNG) + favicons
+  img/brand/      crest in gold / white / black (transparent PNG), crest in black
+                  banner, round black seal, favicons (from the seal)
   img/video/      12-second photo reel + poster
 ```
 
 No build step. Fonts come from Google Fonts; the map is a Google Maps embed.
 
-## The "zoomed out" system
+## Design: the palace (revision 2)
 
-- A fixed hairline **frame** sits inset from the screen edge on every page, with
-  gold corner ticks, plus vertical rails on wide screens (name / coordinates).
-- **Gutters** run to `8.5vw` (up to 176px), several times a normal site's, with
-  `15vw` section spacing.
-- **Hero**: the storefront is shown whole and uncropped in a framed panel, with a
-  blurred copy of the same photo as atmosphere behind it. On load it pulls back
-  from 1.4x; on scroll it eases back a further 7%.
-- **Photographs** start at 1.16x and settle to 1x as they scroll into view.
-- Monospace labels (`01.1 THE HALL, END TO END`) add the digital/HUD feel.
+The first pass used the live site's olive and gold theme in a dark "digital"
+frame. On review the client asked for a palace instead: a throne room, columns,
+ivory porcelain, gilt, prestige, and no jagged lines. The palette now comes from
+the venue's own photographs rather than its current website.
+
+- **Header**: a black band, with the crest hanging below it in a black banner
+  that has a fully rounded foot, a gilt inner line and a pearl. The crest's gold
+  needs black around it to hold its presence on a light page. The banner shrinks
+  on scroll.
+- **Hero, the throne room**: two fluted porcelain columns (gilt rings, an
+  Ionic capital, a rounded base) flank a gilt-molded arch. Through the arch is
+  the storefront, and a red carpet runs out from it toward the visitor. On load
+  the photo pulls back from 1.35x.
+- **Shape language**: arches (plates, tall gallery tiles, review cards), pills
+  (buttons, filters, tags), circles (numerals, bullets, socials, lightbox
+  controls), pearls. Every corner is rounded. The one straight-edged shape is
+  the trapezoid carpet.
+- **Inlay framing**: photos and the form sit in a porcelain gap with a gilt line
+  around them (`box-shadow` rings, so they follow the curves).
+- **Events** is the royal-blue velvet hall: soft vertical folds, a string of
+  pearls and gilt rules top and bottom.
+- **Ornament**: one inline SVG symbol (`#ornament`), a gilt rule with a pearl
+  and two leaf curves, reused under the intro, in the form and in the footer.
+- Section numbers are Roman numerals in gilt circles. The monospace HUD labels
+  from revision 1 are gone.
+- Wide gutters (up to 176px) and tall sections are kept from the first brief.
 
 All motion is disabled under `prefers-reduced-motion`.
 
-## Palette — taken from the live site's theme, unchanged
+## Palette — sampled from the venue photographs
 
-| Token | Hex | Where it is used on the live site |
-|---|---|---|
-| `--night` | `#242109` | header, footer, section backgrounds (`rgba(36,33,9,.98)`) |
-| `--deep` | `#1C1B0F` | deepest ground |
-| `--bronze` | `#594D11` | button background |
-| `--bronze-2` | `#554E15` | header contrast background |
-| `--gold` | `#E0BF1B` | headings |
-| `--amber` | `#CF921A` | nav hover, input borders |
-| `--marigold` | `#DE9E1E` | social icon hover |
-| `--parchment` | `#FCEBCD` | nav links, form labels |
-| `--cream` | `#FFEACC` | body copy on dark, input hover |
-| `--champagne` | `#E3C69E` | submit buttons |
-| `--oxblood` | `#381616` | body copy on light, submit text |
-| `--ink` | `#0D141A` | input text and borders |
-| `--copper` | `#CC6333` | gradient stop (unused live); one blinking dot here |
+K-means and targeted hue sampling over the five interior photos.
 
-One addition: `--crest` `#E7AE33`, the average gold of the crest artwork. The
-live site also sets `rgb(143,17,168)` as the far end of an unused gradient. Being
-purple, it is left out.
+| Token | Hex | Taken from | Used for |
+|---|---|---|---|
+| `--porcelain` | `#F8F8F4` | brightest marble floor | page ground |
+| `--marble` | `#EBEDE9` | floor in shade | alternate bands |
+| `--ivory` | `#E6E2DA` | table linen | column bodies |
+| `--satin` | `#D9D3C0` | satin tablecloths | hairlines, inputs |
+| `--gold` | `#B29B4B` | chiavari chairs | gilt, rules, buttons, ornament |
+| `--gold-lit` | `#E0D1A7` | gold arch under stage light | gold on dark |
+| `--gold-deep` | `#816B2D` | gilt in shadow | large gold type on light |
+| `--gold-ink` | `#6E5A22` | darker gilt | small gold text (6.3:1 on porcelain) |
+| `--royal` | `#162156` | velvet drape behind the stage | events hall |
+| `--royal-deep` | `#090F45` | velvet in the folds | events hall shading |
+| `--carpet` | `#C43043` | red carpet, lit | the runner under the arch |
+| `--crimson` | `#AF1E2F` | red carpet, shadow | runner edge, form errors |
+| `--blush` | `#E9B1AA` | the roses | reserved |
+| `--onyx` | `#13131B` | the black ceiling | crest banner, footer, menu |
+| `--ink` | `#232630` | ceiling fixtures | body copy (14:1) |
 
-Type: the live site uses Lato throughout, so Lato is kept for body copy. Added:
-Cinzel for the wordmark (it echoes the roman caps on the storefront sign),
-Cormorant Garamond for headlines, IBM Plex Mono for labels.
+Plain `--gold` is 2.6:1 on porcelain, so it never carries small text. Gold
+lettering on light grounds uses the darker `.gilt-text` gradient.
+
+Type: Cinzel (wordmark, inscriptions, labels), Cormorant Garamond (headlines),
+Lato (body, as on the current site).
 
 ## Sources
 
@@ -76,6 +96,8 @@ Cormorant Garamond for headlines, IBM Plex Mono for labels.
   excerpts, amenities (stage, sound, projector, free lot, wheelchair-accessible
   entrance/parking/restroom), address. The profile lists **37 photos**; only
   the three above were reachable from here.
+- **Banner and seal PNGs** were drawn in Python (PIL, 3x supersampled for
+  smooth curves) around the original crest.
 - **Black and white crests** were made from the colour PNG by thresholding on
   luminance, so the dark centre disc drops out and the G, ring and flourishes
   stay solid. Clean at the full 1118×941.
