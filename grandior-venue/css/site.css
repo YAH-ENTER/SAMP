@@ -3,7 +3,7 @@
    Every colour below is sampled from the venue's own photographs: the marble
    floor, the satin linens, the chiavari gold, the red carpet, the royal blue
    velvet behind the stage, the roses, and the black of the ceiling.
-   The shape language is the palace: columns, arches, pearls, scallops.
+   The shape language is the palace: arches, pearls, circles, gilt lines.
    Curves and soft gradients only, no points or zig-zags.
    ========================================================================== */
 
@@ -11,7 +11,7 @@
   /* — porcelain & marble — */
   --porcelain:  #F8F8F4;  /* brightest marble, the page */
   --marble:     #EBEDE9;  /* floor in shade, alternate bands */
-  --ivory:      #E6E2DA;  /* linen, column bodies */
+  --ivory:      #E6E2DA;  /* table linen */
   --satin:      #D9D3C0;  /* table satin, hairlines */
   /* — gold — */
   --gold:       #B29B4B;  /* chiavari chairs: ornament, rules, gilt */
@@ -194,111 +194,64 @@ button { font: inherit; color: inherit; }
 .link-gilt:hover { color: var(--onyx); }
 
 /* --------------------------------------------------------------------------
-   Hero — the throne room
+   Hero — the storefront fills the screen. On scroll it pulls back into a
+   porcelain inlay with a gilt line, the way the photographs below are set.
    -------------------------------------------------------------------------- */
-.hero {
-  --p: 0; /* 0 → 1 over the first screen of scroll, set in site.js */
-  position: relative; overflow: hidden;
-  padding: calc(var(--head) + clamp(120px, 10vw, 150px)) var(--gutter) clamp(64px, 7vw, 110px);
-  text-align: center;
-  /* porcelain with the faintest marble cloud and a glow from above */
-  background:
-    radial-gradient(ellipse 70% 50% at 50% 0%, rgba(224, 209, 167, .38), rgba(224, 209, 167, 0) 70%),
-    radial-gradient(ellipse 40% 30% at 12% 70%, rgba(217, 211, 192, .45), rgba(217, 211, 192, 0) 70%),
-    radial-gradient(ellipse 36% 26% at 88% 40%, rgba(217, 211, 192, .38), rgba(217, 211, 192, 0) 70%),
-    linear-gradient(180deg, var(--porcelain) 0%, var(--marble) 100%);
+.hero { --p: 0; position: relative; height: 150vh; } /* --p: 0 → 1, set in site.js */
+.hero__stage {
+  position: sticky; top: 0; height: 100vh; height: 100svh; overflow: hidden;
+  background: var(--porcelain);
+  --inset: calc(var(--p) * clamp(16px, 4.5vw, 80px));
 }
-.hero__head { max-width: 980px; margin: 0 auto; animation: rise 1.6s .2s var(--ease) both; }
+.hero__media, .hero__shade {
+  position: absolute; margin: 0; overflow: hidden;
+  inset: calc(var(--inset) + var(--p) * var(--head)) var(--inset) var(--inset);
+  border-radius: calc(var(--p) * var(--r));
+}
+.hero__media {
+  box-shadow: 0 0 0 calc(var(--p) * 10px) var(--porcelain), 0 0 0 calc(var(--p) * 11px) rgba(178, 155, 75, calc(var(--p) * .7));
+  animation: pull-back 3s var(--ease) both;
+}
+@keyframes pull-back { from { transform: scale(1.3); filter: brightness(.55) saturate(.8); } }
+.hero__media img {
+  width: 100%; height: 100%; object-fit: cover; object-position: 54% 40%; /* the sign sits right of centre */
+  transform: scale(calc(1.06 - var(--p) * .06));
+}
+.hero__shade {
+  background:
+    linear-gradient(0deg, rgba(19, 19, 27, .9) 0%, rgba(19, 19, 27, .72) 26%, rgba(19, 19, 27, .2) 50%, rgba(19, 19, 27, 0) 62%),
+    radial-gradient(ellipse 90% 60% at 50% 100%, rgba(19, 19, 27, .35), rgba(19, 19, 27, 0) 70%);
+}
+
+.hero__copy {
+  position: absolute; z-index: 2; left: var(--gutter); right: var(--gutter);
+  bottom: calc(clamp(40px, 7vh, 84px) + var(--inset));
+  text-align: center; color: var(--porcelain);
+  opacity: calc(1 - var(--p) * 1.15);
+  animation: rise 1.6s .8s var(--ease) both;
+}
 @keyframes rise { from { opacity: 0; transform: translateY(26px); } }
-.hero__title { margin: 26px 0 0; font: 300 clamp(44px, 6vw, 100px)/1.02 var(--f-disp); letter-spacing: -.01em; color: var(--onyx); }
-.hero__lede { margin: 26px auto 0; max-width: 540px; font-size: clamp(15.5px, 1.15vw, 18px); color: var(--ink-soft); }
-.hero__actions { margin-top: 38px; display: flex; flex-wrap: wrap; justify-content: center; gap: 14px; }
+.hero__title {
+  margin: 18px auto 0; max-width: 18em;
+  font: 300 clamp(40px, 5vw, 82px)/1.04 var(--f-disp); letter-spacing: -.005em;
+  color: var(--porcelain); text-shadow: 0 2px 28px rgba(19, 19, 27, .45);
+}
+.hero__title em {
+  font-style: italic;
+  background: linear-gradient(100deg, #CFAB7A 0%, #F3E9C9 45%, #E0D1A7 60%, #CFAB7A 100%);
+  -webkit-background-clip: text; background-clip: text; color: var(--gold-lit); -webkit-text-fill-color: transparent;
+}
+.hero__lede { margin: 18px auto 0; max-width: 560px; font-size: clamp(15px, 1.1vw, 17.5px); color: rgba(248, 248, 244, .86); }
+.hero__actions { margin-top: 30px; display: flex; flex-wrap: wrap; justify-content: center; gap: 14px; }
+.btn--glass { border-color: rgba(248, 248, 244, .7); color: var(--porcelain); background: rgba(19, 19, 27, .25); backdrop-filter: blur(6px); -webkit-backdrop-filter: blur(6px); }
+.btn--glass:hover { background: var(--porcelain); border-color: var(--porcelain); color: var(--onyx); }
+.hero__address { margin: 28px 0 0; font: 500 11px/1.6 var(--f-word); letter-spacing: .26em; text-transform: uppercase; color: rgba(224, 209, 167, .9); }
 
-.throne {
-  position: relative;
-  display: grid; grid-template-columns: auto minmax(0, 600px) auto; justify-content: center; align-items: stretch;
-  column-gap: clamp(30px, 6vw, 120px);
-  margin-top: clamp(64px, 6vw, 96px);
-  transform: scale(calc(1 - var(--p) * .05)); transform-origin: 50% 0;
-}
-.throne::before {
-  content: ""; position: absolute; left: 50%; top: -6%; width: 120%; height: 90%; transform: translateX(-50%);
-  background: radial-gradient(ellipse at 50% 40%, rgba(224, 209, 167, .55), rgba(224, 209, 167, 0) 62%);
-  pointer-events: none;
-}
-
-/* the arch: a gilt molding around a round-topped window onto the storefront */
-.arch { position: relative; margin: 0; }
-.arch__gilt {
-  position: relative; padding: clamp(8px, .9vw, 14px);
-  border-radius: 9999px 9999px 10px 10px;
-  background: linear-gradient(160deg, #E9DDB5 0%, #B29B4B 26%, #816B2D 48%, #CFAB7A 70%, #B29B4B 100%);
-  box-shadow: 0 50px 90px -40px rgba(19, 19, 27, .55), 0 0 0 1px rgba(129, 107, 45, .35);
-  animation: rise 1.4s .5s var(--ease) both;
-}
-.arch__img { position: relative; overflow: hidden; aspect-ratio: 5 / 6; border-radius: 9999px 9999px 4px 4px; background: var(--onyx); }
-.arch__img::after {
-  content: ""; position: absolute; inset: clamp(8px, .8vw, 12px); pointer-events: none;
-  border: 1px solid rgba(233, 221, 181, .75); border-radius: 9999px 9999px 2px 2px;
-}
-.arch__img img { width: 100%; height: 100%; object-fit: cover; object-position: 50% 50%; animation: pull-back 3s .4s var(--ease) both; }
-@keyframes pull-back { from { transform: scale(1.35); filter: brightness(.6) saturate(.8); } }
-
-/* the red carpet, running out from the arch toward the visitor */
-.runner {
-  height: clamp(54px, 6vw, 92px); width: 62%; margin: 0 auto;
-  clip-path: polygon(22% 0, 78% 0, 100% 100%, 0 100%);
-  background: linear-gradient(90deg, #816B2D 0 3%, var(--crimson) 3% 12%, var(--carpet) 50%, var(--crimson) 88% 97%, #816B2D 97%);
-  animation: rise 1.2s 1s var(--ease) both;
-}
-
-/* columns: fluted porcelain shafts, gilt rings, an Ionic capital, a rounded base */
-.column { --cw: clamp(40px, 4.2vw, 76px); width: var(--cw); display: flex; flex-direction: column; align-items: center; animation: rise 1.6s .7s var(--ease) both; }
-.column__cap { position: relative; width: calc(var(--cw) * 1.7); height: calc(var(--cw) * .82); flex: none; }
-.column__cap::before {
-  content: ""; position: absolute; left: 0; right: 0; top: 0; height: 26%;
-  border-radius: 999px; background: var(--gilt);
-  box-shadow: 0 2px 6px rgba(129, 107, 45, .35);
-}
-.column__cap::after {
-  content: ""; position: absolute; left: 3%; right: 3%; top: 24%; bottom: 0;
-  border-radius: 0 0 999px 999px / 0 0 90% 90%;
-  background:
-    radial-gradient(circle at 17% 42%, rgba(178, 155, 75, 0) 0 15%, var(--gold) 16% 24%, rgba(178, 155, 75, 0) 25%),
-    radial-gradient(circle at 83% 42%, rgba(178, 155, 75, 0) 0 15%, var(--gold) 16% 24%, rgba(178, 155, 75, 0) 25%),
-    radial-gradient(circle at 17% 42%, #FFFFFF 0 30%, rgba(255, 255, 255, 0) 31%),
-    radial-gradient(circle at 83% 42%, #FFFFFF 0 30%, rgba(255, 255, 255, 0) 31%),
-    linear-gradient(180deg, #FFFFFF, var(--ivory));
-  box-shadow: inset 0 -6px 10px -6px rgba(129, 107, 45, .35);
-}
-.column__shaft {
-  position: relative; flex: 1; width: 100%; min-height: 200px;
-  border-radius: 3px;
-  background:
-    repeating-linear-gradient(90deg, rgba(129, 107, 45, .13) 0, rgba(255, 255, 255, 0) 5px, rgba(255, 255, 255, 0) calc(16.666% - 5px), rgba(129, 107, 45, .13) 16.666%),
-    linear-gradient(90deg, #CFC9B6 0%, #FFFFFF 34%, var(--porcelain) 52%, var(--ivory) 74%, #C9C2AC 100%);
-}
-.column__shaft::before, .column__shaft::after {
-  content: ""; position: absolute; left: -6%; right: -6%; height: 9px; border-radius: 999px; background: var(--gilt);
-}
-.column__shaft::before { top: 10px; }
-.column__shaft::after { bottom: 10px; }
-.column__base { position: relative; width: calc(var(--cw) * 1.5); height: calc(var(--cw) * .7); flex: none; }
-.column__base::before {
-  content: ""; position: absolute; left: 6%; right: 6%; top: 0; height: 42%;
-  border-radius: 999px; background: linear-gradient(180deg, #FFFFFF, var(--ivory)); box-shadow: inset 0 -3px 6px rgba(129, 107, 45, .25);
-}
-.column__base::after {
-  content: ""; position: absolute; left: 0; right: 0; bottom: 0; height: 52%;
-  border-radius: 10px; background: linear-gradient(180deg, var(--ivory), var(--satin)); box-shadow: 0 0 0 1px rgba(178, 155, 75, .5), inset 0 1px 0 #fff;
-}
-
-.hero__address { margin: 34px 0 0; font: 500 11px/1.6 var(--f-word); letter-spacing: .26em; text-transform: uppercase; color: var(--gold-ink); }
-
-@media (max-width: 760px) {
-  .throne { grid-template-columns: minmax(0, 1fr); }
-  .column { display: none; }
-  .runner { width: 80%; }
+@media (max-width: 700px) {
+  .hero { height: 130vh; }
+  .hero__media img { transform: none; }
+  .hero__copy { left: 22px; right: 22px; }
+  .hero__address { display: none; }
 }
 
 /* --------------------------------------------------------------------------
@@ -594,4 +547,5 @@ button { font: inherit; color: inherit; }
   html { scroll-behavior: auto; }
   *, *::before, *::after { animation: none !important; transition: none !important; }
   .plate__img img { transform: none; opacity: 1; }
+  .hero { height: 100vh; }
 }

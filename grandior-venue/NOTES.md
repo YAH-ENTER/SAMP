@@ -37,14 +37,16 @@ the venue's own photographs rather than its current website.
   that has a fully rounded foot, a gilt inner line and a pearl. The crest's gold
   needs black around it to hold its presence on a light page. The banner shrinks
   on scroll.
-- **Hero, the throne room**: two fluted porcelain columns (gilt rings, an
-  Ionic capital, a rounded base) flank a gilt-molded arch. Through the arch is
-  the storefront, and a red carpet runs out from it toward the visitor. On load
-  the photo pulls back from 1.35x.
+- **Hero**: the storefront fills the screen, as in revision 1, which the client
+  preferred. (A throne-room version with columns and a red carpet was tried and
+  dropped.) The headline, buttons and address sit in a dark band low on the
+  photo, below the sign. The focal point is set to `54% 40%` because the sign
+  sits right of centre, which keeps it whole on phones. On load the photo
+  pulls back from 1.3x. On scroll the stage stays pinned while the photo eases
+  into a porcelain frame with a gilt line, matching the photos further down.
 - **Shape language**: arches (plates, tall gallery tiles, review cards), pills
   (buttons, filters, tags), circles (numerals, bullets, socials, lightbox
-  controls), pearls. Every corner is rounded. The one straight-edged shape is
-  the trapezoid carpet.
+  controls), pearls. Every corner is rounded.
 - **Inlay framing**: photos and the form sit in a porcelain gap with a gilt line
   around them (`box-shadow` rings, so they follow the curves).
 - **Events** is the royal-blue velvet hall: soft vertical folds, a string of
@@ -73,8 +75,8 @@ K-means and targeted hue sampling over the five interior photos.
 | `--gold-ink` | `#6E5A22` | darker gilt | small gold text (6.3:1 on porcelain) |
 | `--royal` | `#162156` | velvet drape behind the stage | events hall |
 | `--royal-deep` | `#090F45` | velvet in the folds | events hall shading |
-| `--carpet` | `#C43043` | red carpet, lit | the runner under the arch |
-| `--crimson` | `#AF1E2F` | red carpet, shadow | runner edge, form errors |
+| `--carpet` | `#C43043` | red carpet, lit | reserved |
+| `--crimson` | `#AF1E2F` | red carpet, shadow | form errors |
 | `--blush` | `#E9B1AA` | the roses | reserved |
 | `--onyx` | `#13131B` | the black ceiling | crest banner, footer, menu |
 | `--ink` | `#232630` | ceiling fixtures | body copy (14:1) |

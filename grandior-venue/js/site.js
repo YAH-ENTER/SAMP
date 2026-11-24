@@ -15,8 +15,9 @@
     var y = window.scrollY || window.pageYOffset;
     head.classList.toggle("is-scrolled", y > 40);
     if (stage && !reduce) {
-      // 0 at the top, 1 once the visitor has scrolled one screen.
-      var p = Math.min(1, Math.max(0, y / (window.innerHeight * 0.75)));
+      // 0 at the top, 1 once the hero has scrolled half a screen (the
+      // sticky stage holds for that long, so the pull-back completes in view).
+      var p = Math.min(1, Math.max(0, y / (stage.offsetHeight - window.innerHeight || window.innerHeight * 0.5)));
       stage.style.setProperty("--p", p.toFixed(4));
     }
     ticking = false;
