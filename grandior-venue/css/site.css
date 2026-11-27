@@ -170,12 +170,12 @@ button { font: inherit; color: inherit; }
 .intro .veil {
   position: fixed; inset: 0; z-index: 300; display: grid; place-items: center;
   background: var(--porcelain);
-  transition: opacity 1.2s var(--ease), visibility 1.2s;
+  transition: opacity .7s ease, visibility .7s;
 }
-.veil__crest { width: 116px; height: auto; opacity: 0; transform: translateY(10px) scale(.97); transition: opacity 1s var(--ease), transform 1.4s var(--ease-out); }
-.intro.crest .veil__crest { opacity: 1; transform: none; }
+.veil__crest { width: 116px; height: auto; opacity: 0; transition: opacity .6s ease; }
+.intro.crest .veil__crest { opacity: 1; }
 .intro.ready .veil { opacity: 0; visibility: hidden; }
-.intro.ready .veil__crest { transform: scale(1.04); opacity: 0; transition-duration: .9s; }
+.intro.ready .veil__crest { opacity: 0; transition-duration: .4s; }
 
 /* --------------------------------------------------------------------------
    Header — black band, crest in its banner, Book now always on screen
@@ -249,10 +249,7 @@ button { font: inherit; color: inherit; }
 .hero__media { position: absolute; inset: 0; transform: translate3d(0, calc(var(--p) * 14%), 0); will-change: transform; }
 .hero__media img {
   width: 100%; height: 100%; object-fit: cover; object-position: 54% 40%; /* the sign sits right of centre */
-  transform: scale(1); transition: transform 3.2s var(--ease-out);
 }
-.intro .hero__media img { transform: scale(1.07); }
-.intro.ready .hero__media img { transform: scale(1); }
 .hero__shade {
   position: absolute; inset: 0;
   background:
@@ -279,11 +276,8 @@ button { font: inherit; color: inherit; }
   background: rgba(19, 19, 27, .5); border: 1px solid rgba(224, 209, 167, .35);
   backdrop-filter: blur(12px) saturate(1.1); -webkit-backdrop-filter: blur(12px) saturate(1.1);
 }
-.intro .hero__in { opacity: 0; transform: translateY(18px); }
-.intro.ready .hero__in {
-  opacity: 1; transform: none;
-  transition: opacity 1.2s var(--ease) calc(.55s + var(--d, 0) * .14s), transform 1.4s var(--ease-out) calc(.55s + var(--d, 0) * .14s);
-}
+.intro .hero__in { opacity: 0; }
+.intro.ready .hero__in { opacity: 1; transition: opacity .6s ease calc(.3s + var(--d, 0) * .06s); }
 @media (max-width: 700px) {
   /* shift the photo up at its normal size so the sign clears the headline;
      the strip this leaves at the bottom sits under the dark fade */
@@ -296,21 +290,13 @@ button { font: inherit; color: inherit; }
 }
 
 /* --------------------------------------------------------------------------
-   Scroll: text rises out of a soft blur; photos open like curtains
+   Scroll: a brief fade in. Text and photos alike, no movement.
    -------------------------------------------------------------------------- */
-.intro [data-reveal] {
-  opacity: 0; transform: translateY(26px); filter: blur(6px);
-  transition: opacity 1.2s var(--ease) calc(var(--d, 0) * .13s), transform 1.4s var(--ease-out) calc(var(--d, 0) * .13s), filter 1.2s var(--ease) calc(var(--d, 0) * .13s);
+.intro [data-reveal], .intro [data-unveil] img {
+  opacity: 0;
+  transition: opacity .6s ease calc(var(--d, 0) * .06s);
 }
-.intro [data-reveal].is-in { opacity: 1; transform: none; filter: none; }
-.intro svg.ornament[data-reveal] { transform: scaleX(.2); filter: none; }
-.intro svg.ornament[data-reveal].is-in { transform: none; }
-
-.intro [data-unveil] img {
-  clip-path: inset(9% 7% 9% 7% round 28px); transform: scale(1.12);
-  transition: clip-path 1.9s var(--ease-out) calc(var(--d, 0) * .15s), transform 2.6s var(--ease-out) calc(var(--d, 0) * .15s);
-}
-.intro [data-unveil].is-in img { clip-path: inset(0 0 0 0 round 0); transform: scale(1); }
+.intro [data-reveal].is-in, .intro [data-unveil].is-in img { opacity: 1; }
 
 /* --------------------------------------------------------------------------
    Intro
@@ -509,9 +495,15 @@ button { font: inherit; color: inherit; }
    Visit
    -------------------------------------------------------------------------- */
 .visit { padding-top: var(--sec); }
-.visit__grid { display: grid; grid-template-columns: 6fr 1fr 5fr; align-items: start; }
+/* The address block and the form sit side by side as one centred pair,
+   equal columns, so the form doesn't hug the right margin. */
+.visit__grid {
+  display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); column-gap: clamp(48px, 6vw, 110px); align-items: start;
+  max-width: calc(1180px + var(--gutter) * 2);
+}
+.visit__grid > * { min-width: 0; } /* a wide date field can't stretch the column */
 .visit__info { grid-column: 1; }
-.form { grid-column: 3; }
+.form { grid-column: 2; }
 .visit__copy { margin: 24px 0 0; max-width: 480px; color: var(--ink-soft); }
 .contact { margin: 44px 0 0; }
 .contact div { display: grid; grid-template-columns: 120px 1fr; gap: 16px; align-items: baseline; padding: 18px 0; background: linear-gradient(90deg, var(--satin), rgba(217, 211, 192, 0)) bottom / 100% 1px no-repeat; }
@@ -535,12 +527,20 @@ button { font: inherit; color: inherit; }
 }
 .field input::placeholder, .field textarea::placeholder { color: #8A8C94; }
 .field input:focus, .field select:focus, .field textarea:focus { outline: none; border-color: var(--gold); background: #FFFFFF; box-shadow: 0 0 0 4px rgba(178, 155, 75, .18); }
-.field input[type="date"] { color-scheme: light; }
+/* Date fields: phones (Safari especially) give these a wide built-in size and
+   collapse them when empty. Pin the width, height and alignment. */
+.field input[type="date"] {
+  color-scheme: light; -webkit-appearance: none; appearance: none;
+  display: block; min-width: 0; max-width: 100%; min-height: 50px; text-align: left;
+}
+.field input[type="date"]::-webkit-date-and-time-value { text-align: left; margin: 0; }
+.field input[type="date"]::-webkit-calendar-picker-indicator { opacity: .55; cursor: pointer; }
 .field .is-bad { border-color: var(--crimson); }
 .hp { position: absolute; left: -9999px; width: 1px; height: 1px; opacity: 0; }
 .form__note { min-height: 1.5em; margin: 14px 0 0; font-size: 15px; color: var(--ink-soft); }
-@media (max-width: 900px) { .visit__grid { grid-template-columns: 1fr; gap: 64px; } .visit__info, .form { grid-column: 1; } }
-@media (max-width: 520px) { .field-row { grid-template-columns: 1fr; } .contact div { grid-template-columns: 1fr; gap: 4px; } }
+@media (max-width: 900px) { .visit__grid { grid-template-columns: 1fr; gap: 64px; } .visit__info, .form { grid-column: 1; } .form { width: 100%; max-width: 600px; justify-self: center; } }
+@media (max-width: 640px) { .field-row { grid-template-columns: 1fr; } }
+@media (max-width: 520px) { .contact div { grid-template-columns: 1fr; gap: 4px; } }
 
 .map { position: relative; margin-top: var(--sec); }
 .map__fallback { position: absolute; inset: 0; margin: 0; display: grid; place-items: center; background: var(--marble); }

@@ -48,11 +48,10 @@ the client's photographs carry the page, edge to edge with no frames, and
 leaves the design around them quiet. The reasoning, and the designers behind
 it, are in `DESIGN-PHILOSOPHY.md`.
 
-- **Opening**: the page starts on a white screen, the crest fades in, and then
-  the storefront fades up. `site.js` waits for the hero photo to decode (and the
-  fonts to load) before anything moves, which fixed the stutter the old load-in
-  zoom had. The crest stays for at least 1.1 seconds, and the page is never held
-  longer than 3. Without JS there is no white screen.
+- **Opening**: the page starts on a white screen, the crest fades in, then the
+  page fades up. `site.js` waits for the hero photo to decode (and the fonts to
+  load) before anything moves. The crest stays at least 0.7 seconds, and the
+  page is never held longer than 3. Without JS there is no white screen.
 - **Header**: a fixed black band, with the crest alone (no wordmark) in a black
   banner with a rounded foot. The grid row is pinned to the bar's height, so
   nothing sinks below the gold line. "Book now" is a gold button that never
@@ -78,8 +77,15 @@ it, are in `DESIGN-PHILOSOPHY.md`.
   over the full-size banquet photo (`hall-tables.webp`), tinted navy. The
   stage photo used there before was the 1000px version, which looked soft
   when stretched. Event names are set at `--t-serif`, not `--t-lead`.
-- **Scroll**: text rises out of a soft blur, and each photo opens from a
-  rounded inset to full bleed like a curtain. Staggered with `--d`.
+- **Scroll**: a brief fade in (0.6 seconds, opacity only) for text and photos
+  alike, lightly staggered with `--d`. The client asked for this in place of
+  the earlier blur-rise and curtain effects.
+- **Form**: the address block and the form are one centred pair of equal
+  columns (max 1180px). Event, date and guest count each get a full row, so the
+  date field has room. Grid items get `min-width: 0` and the date input has its
+  width and height pinned, so a phone's built-in date control can't push the
+  form past the right margin. Checked in Chromium at 360, 390, 820 and 1440px.
+  WebKit isn't installed in the build environment, so check on a real iPhone.
 - **Reviews**: a carousel inside the page margins, three cards across on
   desktop, two on tablets, one on phones. It rotates every 5.5 seconds only
   while on screen, pauses on hover, focus, touch and hidden tabs, and loops

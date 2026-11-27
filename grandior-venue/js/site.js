@@ -18,10 +18,10 @@
   function openPage() {
     if (opened) return;
     opened = true;
-    var wait = Math.max(0, (reduce ? 200 : 1100) - (Date.now() - started)); // let the crest be seen
+    var wait = Math.max(0, (reduce ? 150 : 700) - (Date.now() - started)); // let the crest be seen
     setTimeout(function () {
       root.classList.add("ready");
-      setTimeout(function () { var v = $(".veil"); if (v) v.remove(); }, 1500);
+      setTimeout(function () { var v = $(".veil"); if (v) v.remove(); }, 900);
     }, wait);
   }
   var decoded = heroImg && heroImg.decode ? heroImg.decode() : Promise.resolve();
