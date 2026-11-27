@@ -53,10 +53,17 @@ it, are in `DESIGN-PHILOSOPHY.md`.
   fonts to load) before anything moves, which fixed the stutter the old load-in
   zoom had. The crest stays for at least 1.1 seconds, and the page is never held
   longer than 3. Without JS there is no white screen.
-- **Header**: a fixed black band, with the crest in a black banner with a
-  rounded foot. "Book now" is a gilt button that never leaves the screen: on
-  the right of the nav on desktop, and on the left of the header on phones,
-  where the burger opens the rest.
+- **Header**: a fixed black band, with the crest alone (no wordmark) in a black
+  banner with a rounded foot. The grid row is pinned to the bar's height, so
+  nothing sinks below the gold line. "Book now" is a gold button that never
+  leaves the screen: on the right of the nav on desktop, and on the left of the
+  header on phones, with a three-line burger on the right. Checked at 360, 390
+  and 430px: the button sits inside the bar, at least 12px clear of the banner.
+  Every "Book now" and "Book a tour" goes to the "Ask about a date" form
+  (`#enquiry`).
+- **Gold buttons**: a black outline, a bevel (light top edge, shaded bottom),
+  a thin inner molding line and a dark gold ledge underneath, so they read as
+  raised. A sheen crosses on hover, and they press down on click.
 - **Hero**: the storefront fills the screen with a slow parallax on scroll. The
   headline, buttons and address sit under the sign. The address is on a frosted
   glass pill so it reads over the brick. Focal point `54% 40%`. On phones the
@@ -65,7 +72,9 @@ it, are in `DESIGN-PHILOSOPHY.md`.
 - **Photos**: full width. The hall is one tall band, then two photos side by
   side, then the ceremony stage running to the left edge beside the "Why"
   copy. The gallery spans the screen with 6px seams. The events section sits
-  over the blue-velvet stage photo, tinted navy.
+  over the full-size banquet photo (`hall-tables.webp`), tinted navy. The
+  stage photo used there before was the 1000px version, which looked soft
+  when stretched. Event names are set at `--t-serif`, not `--t-lead`.
 - **Scroll**: text rises out of a soft blur, and each photo opens from a
   rounded inset to full bleed like a curtain. Staggered with `--d`.
 - **Reviews**: a carousel inside the page margins, three cards across on
@@ -83,6 +92,8 @@ it, are in `DESIGN-PHILOSOPHY.md`.
 - Shape language is unchanged: arches, pills, circles and pearls, with no points.
 
 All motion is disabled under `prefers-reduced-motion`.
+
+- **Footer** ends with "Powered by Yahshua Marketing".
 
 ## Palette — sampled from the venue photographs
 
