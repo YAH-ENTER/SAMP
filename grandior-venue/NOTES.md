@@ -64,6 +64,9 @@ it, are in `DESIGN-PHILOSOPHY.md`.
 - **Gold buttons**: a black outline, a bevel (light top edge, shaded bottom),
   a thin inner molding line and a dark gold ledge underneath, so they read as
   raised. A sheen crosses on hover, and they press down on click.
+- **Gallery filters** use the same build in porcelain, one step quieter, and
+  the selected one turns gold. The Roman numerals in the section labels are
+  small gold coins with a lighter bevel.
 - **Hero**: the storefront fills the screen with a slow parallax on scroll. The
   headline, buttons and address sit under the sign. The address is on a frosted
   glass pill so it reads over the brick. Focal point `54% 40%`. On phones the
@@ -83,7 +86,8 @@ it, are in `DESIGN-PHILOSOPHY.md`.
   through clones so it never jumps back. Checked at 1440, 820 and 390px: equal
   margins (115/115, 66/66, 31/31) and cards land flush after each slide.
 - **Type**: one scale of five sizes (`--t-display`, `--t-lead`, `--t-serif`,
-  `--t-body`, `--t-label`). Every section title matches the hero headline, and
+  `--t-body`, `--t-label`), plus `--t-micro` (10px), used only for captions
+  laid over photos and video and in the lightbox. Every section title matches the hero headline, and
   every label, button and caption is 12px Cinzel.
 - **Copy**: rewritten with the humanizer rules: no inflated claims, no stock
   triads, no dashes, plain verbs. Facts only from the client's site, Google
@@ -93,7 +97,8 @@ it, are in `DESIGN-PHILOSOPHY.md`.
 
 All motion is disabled under `prefers-reduced-motion`.
 
-- **Footer** ends with "Powered by Yahshua Marketing".
+- **Footer** ends with "Powered by Yahshua Marketing", linked to
+  <https://yahshuamarketing.com>.
 
 ## Palette — sampled from the venue photographs
 

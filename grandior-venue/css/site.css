@@ -37,7 +37,8 @@
   --t-lead:    clamp(24px, 2.2vw, 34px);   /* intro, event names, form title */
   --t-serif:   clamp(19px, 1.4vw, 22px);   /* reviews, lists, contact, facts */
   --t-body:    17px;                       /* paragraphs */
-  --t-label:   12px;                       /* every label, button, link, caption */
+  --t-label:   12px;                       /* every label, button, link */
+  --t-micro:   10px;                       /* captions laid over photos and video */
 
   --gutter: clamp(22px, 8vw, 160px);
   --max:    1600px;
@@ -89,12 +90,22 @@ button { font: inherit; color: inherit; }
 }
 
 .kicker { margin: 0; display: inline-flex; align-items: center; gap: 14px; color: var(--gold-ink); }
+/* Roman numerals: a small gold coin, bevelled like the buttons but paler and
+   with less depth, so it reads as a detail rather than a control. */
 .numeral {
-  display: inline-grid; place-items: center; min-width: 34px; height: 34px; padding: 0 8px;
-  border: 1px solid var(--gold); border-radius: 999px; letter-spacing: .06em; color: var(--gold-ink);
+  display: inline-grid; place-items: center; min-width: 36px; height: 36px; padding: 0 9px;
+  border-radius: 999px; border: 1px solid rgba(19, 19, 27, .85);
+  background: linear-gradient(180deg, #FBF6E6 0%, #EFE3B9 28%, #D6C07D 62%, #BCA459 100%);
+  box-shadow:
+    inset 0 1px 0 rgba(255, 253, 244, .95),
+    inset 0 -2px 2px rgba(110, 90, 34, .32),
+    inset 0 0 0 2px rgba(255, 248, 226, .35),
+    0 1.5px 0 #6E5A22,
+    0 6px 12px -6px rgba(19, 19, 27, .45);
+  letter-spacing: .06em; color: var(--onyx); text-shadow: 0 1px 0 rgba(255, 250, 232, .8);
 }
 .kicker--light { color: var(--gold-lit); }
-.kicker--light .numeral { color: var(--gold-lit); border-color: rgba(224, 209, 167, .6); }
+.kicker--light .numeral { border-color: var(--onyx); }
 
 .ornament { display: block; width: 240px; height: 24px; margin: 0 auto; }
 .ornament--sm { width: 180px; height: 18px; margin: 0 0 30px; }
@@ -327,8 +338,9 @@ button { font: inherit; color: inherit; }
 .bleed-pair { display: grid; grid-template-columns: 1fr 1fr; gap: 6px; margin-top: 6px; }
 .bleed-pair .bleed { height: clamp(380px, 74vh, 860px); }
 .bleed__cap {
-  position: absolute; left: clamp(16px, 3vw, 40px); bottom: clamp(16px, 3vw, 36px); margin: 0;
-  padding: 10px 18px; border-radius: 999px; color: var(--porcelain);
+  position: absolute; left: clamp(14px, 2.4vw, 32px); bottom: clamp(14px, 2.4vw, 30px); margin: 0;
+  padding: 7px 13px; border-radius: 999px; color: var(--porcelain);
+  font-size: var(--t-micro); letter-spacing: .18em;
   background: rgba(19, 19, 27, .45); backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px);
 }
 @media (max-width: 760px) {
@@ -385,12 +397,35 @@ button { font: inherit; color: inherit; }
    -------------------------------------------------------------------------- */
 .gallery { padding-top: var(--sec); padding-bottom: 6px; }
 .filters { display: flex; flex-wrap: wrap; justify-content: center; gap: 10px; margin-top: 36px; }
+/* Gallery filters: built like the gold buttons (outline, bevel, inner molding,
+   raised edge) but in porcelain, one step quieter. The selected filter is gold. */
 .filters button {
-  background: #fff; border: 1px solid var(--satin); border-radius: 999px; cursor: pointer; padding: 12px 20px; color: var(--ink-soft);
-  transition: border-color .3s, color .3s, background .3s;
+  position: relative; cursor: pointer; padding: 12px 22px; border-radius: 999px; color: var(--ink);
+  border: 1px solid rgba(19, 19, 27, .8);
+  background: linear-gradient(180deg, #FFFFFF 0%, var(--porcelain) 45%, var(--ivory) 100%);
+  box-shadow:
+    inset 0 1px 0 #FFFFFF,
+    inset 0 -2px 2px rgba(129, 107, 45, .2),
+    0 2px 0 #C9BE9B,
+    0 3px 0 rgba(19, 19, 27, .75),
+    0 8px 14px -8px rgba(19, 19, 27, .35);
+  transition: transform .25s var(--ease), box-shadow .25s var(--ease), color .3s;
 }
-.filters button:hover { border-color: var(--gold); color: var(--onyx); }
-.filters button.is-on { background: var(--gilt); border-color: transparent; color: var(--onyx); }
+.filters button::after {
+  content: ""; position: absolute; inset: 3px; border-radius: inherit; pointer-events: none;
+  border: 1px solid rgba(178, 155, 75, .45);
+}
+.filters button:hover {
+  transform: translateY(-1px); color: var(--onyx);
+  box-shadow: inset 0 1px 0 #FFFFFF, inset 0 -2px 2px rgba(129, 107, 45, .2), 0 3px 0 #C9BE9B, 0 4px 0 rgba(19, 19, 27, .75), 0 12px 18px -10px rgba(19, 19, 27, .4);
+}
+.filters button:active { transform: translateY(2px); box-shadow: inset 0 1px 0 #FFFFFF, inset 0 -1px 2px rgba(129, 107, 45, .2), 0 0 0 #C9BE9B, 0 1px 0 rgba(19, 19, 27, .75), 0 4px 8px -6px rgba(19, 19, 27, .35); }
+.filters button.is-on {
+  color: var(--onyx); text-shadow: 0 1px 0 rgba(255, 248, 222, .7);
+  background: linear-gradient(180deg, #F4EACB 0%, #DFC985 20%, #BBA357 48%, #94793A 76%, #AE9344 100%);
+  box-shadow: inset 0 1px 0 rgba(255, 251, 235, .95), inset 0 -2px 2px rgba(74, 57, 18, .55), 0 2px 0 #5C4919, 0 3px 0 var(--onyx), 0 8px 14px -8px rgba(19, 19, 27, .5);
+}
+.filters button.is-on::after { border-color: rgba(255, 246, 214, .6); }
 .grid { display: grid; gap: 6px; padding-inline: 6px; grid-template-columns: repeat(4, 1fr); grid-auto-rows: clamp(200px, 21vw, 400px); grid-auto-flow: dense; }
 .tile { margin: 0; position: relative; overflow: hidden; background: var(--marble); }
 .tile.is-hidden { display: none; }
@@ -401,7 +436,8 @@ button { font: inherit; color: inherit; }
 .tile img { width: 100%; height: 100%; object-fit: cover; transition: transform 1.4s var(--ease-out); }
 .tile:hover img { transform: scale(1.05); }
 .tile__tag {
-  position: absolute; left: 16px; bottom: 16px; white-space: nowrap; padding: 9px 15px; border-radius: 999px; color: var(--porcelain);
+  position: absolute; left: 12px; bottom: 12px; white-space: nowrap; padding: 6px 11px; border-radius: 999px; color: var(--porcelain);
+  font-size: var(--t-micro); letter-spacing: .18em;
   background: rgba(19, 19, 27, .5); backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px);
 }
 .tile__play {
@@ -430,7 +466,7 @@ button { font: inherit; color: inherit; }
 .lb__media img, .lb__media video { max-width: min(1500px, 100%); max-height: calc(100vh - clamp(160px, 18vw, 240px)); width: auto; height: auto; object-fit: contain; }
 .lb__media img { animation: lb-in .8s var(--ease-out) both; }
 @keyframes lb-in { from { transform: scale(1.04); opacity: 0; } }
-.lb__cap { margin-top: 20px; display: flex; gap: 18px; color: var(--ivory); text-align: center; }
+.lb__cap { margin-top: 18px; display: flex; gap: 16px; color: var(--ivory); text-align: center; font-size: var(--t-micro); letter-spacing: .18em; }
 .lb__count { color: var(--gold); white-space: nowrap; }
 .lb__close, .lb__nav { position: absolute; display: grid; place-items: center; cursor: pointer; width: 54px; height: 54px; border-radius: 50%; background: rgba(19, 19, 27, .5); border: 1px solid rgba(178, 155, 75, .6); color: var(--gold-lit); font-size: 20px; line-height: 1; transition: background .3s, color .3s; }
 .lb__close:hover, .lb__nav:hover { background: var(--gilt); color: var(--onyx); }
@@ -528,6 +564,8 @@ button { font: inherit; color: inherit; }
 .foot__legal { margin: 56px 0 0; letter-spacing: .18em; color: rgba(230, 226, 218, .6); }
 .foot__credit { margin: 14px 0 0; letter-spacing: .18em; color: rgba(230, 226, 218, .5); }
 .foot__credit b { font-weight: 500; color: var(--gold-lit); }
+.foot__credit a { text-decoration: none; padding-bottom: 2px; background: linear-gradient(var(--gold-lit), var(--gold-lit)) bottom / 0 1px no-repeat; transition: background-size .4s var(--ease); }
+.foot__credit a:hover { background-size: 100% 1px; }
 
 /* --------------------------------------------------------------------------
    Motion off
